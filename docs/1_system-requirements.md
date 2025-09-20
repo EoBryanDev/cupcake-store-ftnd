@@ -10,11 +10,14 @@
   - Products most saled
   - Footer
 - It should be able to see product details.
+- It should be able to search products.
 - It should be able to add/remove items from cart
 - It should be able to register account with:
   - First name, Last name, Phone number, Email and Password
 - It should be able to Login
-- Logged user should be able to buy a product
+- Logged user should be able to order products variantes
+- In checkout screen, logged user can be able to register an address or chose one
+- In checkout screen, logged user must add cep to calculate shipping tax
 
 ### Admin
 
