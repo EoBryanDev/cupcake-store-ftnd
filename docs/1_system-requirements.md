@@ -23,7 +23,7 @@
   - Add/edit/remove product
   - Add/edit/remove product variant
   - Add/remove stock product variant
-- Admin should be able to deny/approve order
+- Admin should be able to deny/approve order.
 
 ## Non-Functional Requirements
 
