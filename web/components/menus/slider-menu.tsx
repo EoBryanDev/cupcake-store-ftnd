@@ -55,9 +55,9 @@ function SliderMenu() {
                 </>
               ) : ( */}
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold">Olá. Faça o seu login!</h2>
+            <h2 className="font-semibold">Hello! Sign in your account !</h2>
             <Button size="icon" asChild variant="default">
-              <Link href="/authentication">
+              <Link href="/login">
                 <LogInIcon />
               </Link>
             </Button>

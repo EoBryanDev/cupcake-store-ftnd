@@ -5,6 +5,7 @@ import { NotepadText, Menu } from "lucide-react";
 
 import Link from "next/link";
 import { SliderMenu } from "./slider-menu";
+import { OrderButton } from "../buttons/order-button";
 
 export function NavMenuDesktop() {
   return (
@@ -42,7 +43,7 @@ export function NavMenuDesktop() {
         </div>
 
         <div className="flex items-center space-x-2 sm:space-x-4">
-          <NotepadText className="h-5 w-5 cursor-pointer" />
+          <OrderButton />
           <ThemeToggle />
           <SliderMenu />
         </div>
