@@ -10,11 +10,14 @@
   - Products most saled
   - Footer
 - It should be able to see product details.
+- It should be able to search products.
 - It should be able to add/remove items from cart
 - It should be able to register account with:
   - First name, Last name, Phone number, Email and Password
 - It should be able to Login
-- Logged user should be able to buy a product
+- Logged user should be able to order products variantes
+- In checkout screen, logged user can be able to register an address or chose one
+- In checkout screen, logged user must add cep to calculate shipping tax
 
 ### Admin
 
@@ -23,7 +26,7 @@
   - Add/edit/remove product
   - Add/edit/remove product variant
   - Add/remove stock product variant
-- Admin should be able to deny/approve order.
+- Admin should be able to deny/approve order
 
 ## Non-Functional Requirements
 
@@ -36,6 +39,17 @@
 
 ## Design Requirements
 
-- It should be develop a webapp
-- It should be develop with NextJS
-- Cart feature must be develop with global state
+- It must be developed a webapp
+- It must be used pnpm as package manager
+- It must be used Typescript
+- It must be used Tailwind
+- It must be developed with NextJS
+- It must be used Shadcn@2.10.0 as react component lib
+- It must be used React-Hook-Form
+- It must be used React-Query
+- It must be used Vitests as Unit Test
+- It must be used Cypress as E2E Test
+- It must be used Eslint, Prettier and .config to help with code pattern
+- It must be used Zustand as Global State Manager
+- It must be used page router
+- It must be used view-service-action
