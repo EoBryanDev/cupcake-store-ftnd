@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeToggle } from "@/components/buttons/theme-toggle";
+import { ThemeToggle } from "@/src/components/buttons/theme-toggle";
 import { NotepadText, Menu } from "lucide-react";
 
 import Link from "next/link";

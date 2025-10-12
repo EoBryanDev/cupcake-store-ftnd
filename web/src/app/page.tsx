@@ -1,6 +1,6 @@
-import { MainFooter } from "@/components/footers/main-footer";
-import { NavMenu } from "@/components/menus/nav-menu";
-import { HomePage } from "@/components/pages/home-page";
+import { MainFooter } from "@/src/components/footers/main-footer";
+import { NavMenu } from "@/src/components/menus/nav-menu";
+import { HomePage } from "@/src/components/pages/home-page";
 
 export default function Home() {
   return (
