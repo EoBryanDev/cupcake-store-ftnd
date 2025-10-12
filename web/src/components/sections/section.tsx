@@ -3,7 +3,7 @@ interface ISection {
 }
 
 const Section = ({ children }: ISection) => {
-  return <section className="my-12 h-[10vh]">{children}</section>;
+  return <section className="my-12">{children}</section>;
 };
 
 export { Section };

@@ -21,17 +21,17 @@ export function NavMenuDesktop() {
 
         <div className="flex items-center space-x-2 sm:space-x-8">
           <nav className="hidden items-center space-x-6 sm:flex">
-            <div className="hover:text-primary flex items-center space-x-2">
+            <div className="hover:text-primary flex items-center">
               <Link href="/" className="cursor-pointer text-sm">
                 Home
               </Link>
             </div>
-            <div className="hover:text-primary flex items-center space-x-2">
+            <div className="hover:text-primary flex items-center">
               <Link href="/" className="cursor-pointer text-sm">
                 Products
               </Link>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center">
               <Link
                 href="/"
                 className="hover:text-primary cursor-pointer text-sm"
