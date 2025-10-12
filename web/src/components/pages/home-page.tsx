@@ -3,7 +3,6 @@ import { useProductVariantQuery } from "@/src/hooks/queries/useProductVariants";
 import { MainContainer } from "../containers/main-container";
 import { ProductList } from "../products/product-list";
 import { Section } from "../sections/section";
-import { Section85 } from "../sections/section85";
 import { HighLightTitle } from "../sections/titles/highlight-title";
 import { Subtitle } from "../sections/titles/subtitle";
 import { IProductData } from "@/src/interface/IProductVariant";
@@ -11,21 +10,33 @@ import { PromoBanner } from "../banners/promo-banner";
 
 interface IHomePage {
   initialNwstVariantProd: IProductData | null;
+  initialPopularVariantProd: IProductData | null;
 }
 
-function HomePage({ initialNwstVariantProd }: IHomePage) {
+function HomePage({
+  initialNwstVariantProd,
+  initialPopularVariantProd,
+}: IHomePage) {
   const {
     data: newestProducts,
-    isLoading,
-    error,
+    isLoading: newestProductsLoading,
+    error: newestProductsError,
   } = useProductVariantQuery("newest", {
     initialData: initialNwstVariantProd,
   });
+
+  const {
+    data: popularProducts,
+    isLoading: popularProductsLoading,
+    error: popularProductsError,
+  } = useProductVariantQuery(null, {
+    initialData: initialPopularVariantProd,
+  });
   return (
-    <>
+    <main>
       <MainContainer>
         <Section>
-          <div className="text-center">
+          <div className="mb-8 text-center">
             <HighLightTitle>
               <span className="from-primary bg-gradient-to-r to-gray-500 bg-clip-text text-transparent">
                 CupCake{" "}
@@ -37,23 +48,46 @@ function HomePage({ initialNwstVariantProd }: IHomePage) {
               flavors.
             </Subtitle>
           </div>
+          <div className="">
+            <PromoBanner src="https://pub-3487eb3e73174ed99e160777dbdb7a0f.r2.dev/cupcake-store.png" />
+          </div>
         </Section>
 
         <hr />
-        <Section85>
+
+        <Section>
           <HighLightTitle>Newest Products</HighLightTitle>
           <Subtitle>Our newest products that will impress your tasty</Subtitle>
-          {isLoading && <div>Loading...</div>}
-          {error && <div>Error loading products</div>}
-          <div className="mt-8 py-4">
+          {newestProductsLoading && <div>Loading...</div>}
+          {newestProductsError && <div>Error loading products</div>}
+          <div className="mt-8">
             {newestProducts && <ProductList products={newestProducts.data} />}
           </div>
-        </Section85>
-        <Section85>
-          <PromoBanner src="https://pub-3487eb3e73174ed99e160777dbdb7a0f.r2.dev/promo-halloween.png"></PromoBanner>
-        </Section85>
+        </Section>
+
+        <hr />
+
+        <Section>
+          <div className="">
+            <PromoBanner src="https://pub-3487eb3e73174ed99e160777dbdb7a0f.r2.dev/promo-halloween.png" />
+          </div>
+        </Section>
+
+        <hr />
+
+        <Section>
+          <HighLightTitle>Most Popular</HighLightTitle>
+          <Subtitle>
+            Our most popular products that impressour customers
+          </Subtitle>
+          {popularProductsLoading && <div>Loading...</div>}
+          {popularProductsError && <div>Error loading products</div>}
+          <div className="mt-8 py-4">
+            {popularProducts && <ProductList products={popularProducts.data} />}
+          </div>
+        </Section>
       </MainContainer>
-    </>
+    </main>
   );
 }
 
