@@ -5,12 +5,12 @@ import { ProductList } from "../products/product-list";
 import { Section } from "../sections/section";
 import { HighLightTitle } from "../sections/titles/highlight-title";
 import { Subtitle } from "../sections/titles/subtitle";
-import { IProductData } from "@/src/interface/IProductVariant";
 import { PromoBanner } from "../banners/promo-banner";
+import { IProductResponse } from "@/src/interface/IProductVariant";
 
 interface IHomePage {
-  initialNwstVariantProd: IProductData | null;
-  initialPopularVariantProd: IProductData | null;
+  initialNwstVariantProd: IProductResponse | null;
+  initialPopularVariantProd: IProductResponse | null;
 }
 
 function HomePage({

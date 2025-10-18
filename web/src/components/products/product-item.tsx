@@ -17,7 +17,7 @@ const ProductItem = ({
 
   return (
     <Link
-      href={`/product-variant/${firstVariant.slug}`}
+      href={`products/${product.slug}/variants`}
       className="flex flex-col gap-4"
     >
       <Image
