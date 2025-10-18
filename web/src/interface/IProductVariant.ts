@@ -52,14 +52,16 @@ interface IPagination {
 };
 
 // Tipo para os dados internos (com produtos e paginação)
-interface IProductData {
-  data: IProduct[];
-  pagination: IPagination;
-};
 
 // Tipo para a resposta completa da API
 interface IProductResponse {
-  data: IProductData;
+  data: IProduct[];
+  total: null;
+  error: string;
+};
+
+interface IProductVariantBySlugResponse {
+  data: IProduct;
   total: null;
   error: string;
 };
@@ -69,6 +71,6 @@ export type {
   ICategory,
   IProduct,
   IPagination,
-  IProductData,
-  IProductResponse
+  IProductResponse,
+  IProductVariantBySlugResponse
 }
