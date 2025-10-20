@@ -4,9 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 const API_BACKEND_URL = process.env.NEXT_ENVIROMENT === 'DEV' ?
   process.env.NEXT_PUBLIC_WS_DEV : process.env.NEXT_PUBLIC_WS_PROD;
 
-export async function GET(_request: NextRequest, { params }: { params: { slug: string } }) {
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
-    const url = `${API_BACKEND_URL}/products/${params.slug}/variants`;
+    const { slug } = await params;
+    const url = `${API_BACKEND_URL}/products/${slug}/variants`;
 
     // Faz a requisição diretamente para o backend real, com o token
     const response = await fetch(url, {
