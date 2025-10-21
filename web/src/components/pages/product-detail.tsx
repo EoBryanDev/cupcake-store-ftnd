@@ -8,16 +8,27 @@ import { useProductVariantByIdQuery } from "@/src/hooks/queries/useProductVarian
 import { Section } from "../sections/section";
 import { HighLightTitle } from "../sections/titles/highlight-title";
 import { Subtitle } from "../sections/titles/subtitle";
+import VariantSelector from "../products/variant-selector";
+import { QuantitySelector } from "../products/quantity-selector";
+import { ProductList } from "../products/product-list";
+import { useProductVariantQuery } from "@/src/hooks/queries/useProductVariants";
 
 interface IProductDetailPageProps {
   slug: string;
+  varSlug: string;
 }
-const ProductDetailPage = ({ slug }: IProductDetailPageProps) => {
+const ProductDetailPage = ({ slug, varSlug }: IProductDetailPageProps) => {
   const {
     data: product,
     isLoading: productLoading,
     error: productError,
   } = useProductVariantByIdQuery(slug);
+
+  const {
+    data: popularProducts,
+    isLoading: popularProductsLoading,
+    error: popularProductsError,
+  } = useProductVariantQuery(null, { initialData: null });
 
   if (productError) {
     return notFound();
@@ -50,9 +61,10 @@ const ProductDetailPage = ({ slug }: IProductDetailPageProps) => {
         <section className="md:w-md">
           {/* DESCRIÇÃO */}
           <header>
-            <HighLightTitle>{product.data.name}</HighLightTitle>
-            <Subtitle>{productVariant[0].name}</Subtitle>
-
+            <HighLightTitle>{productVariant[0].name}</HighLightTitle>
+            <div className="mt-3">
+              <Subtitle>{product.data.category.name}</Subtitle>
+            </div>
             <hr className="mt-3 mb-2" />
           </header>
           <section className="mb-8">
@@ -62,22 +74,23 @@ const ProductDetailPage = ({ slug }: IProductDetailPageProps) => {
           </section>
 
           <section className="mb-8">
-            <h4 className="text-lg">Variants</h4>
-            {/* >
-          <VariantSelector
-            selectedVariantSlug={productVariant.slug}
-            variants={productVariant.variants}
-          /> */}
+            <h4 className="mb-2 text-lg">Variants</h4>
+
+            <VariantSelector
+              selectedVariantSlug={varSlug}
+              selectedProdSlug={slug}
+              variants={productVariant}
+            />
           </section>
 
-          <main className="mb-8 flex items-center justify-between">
-            <h2 className="text-3xl font-semibold">
-              {formatCentsToBRL(productVariant[0].priceInCents)}
-            </h2>
-
-            <div className="flex items-center justify-between space-x-3">
-              <button>+</button> 39 <button>-</button>
-            </div>
+          <main className="mb-8">
+            <section className="flex items-center justify-between">
+              <h2 className="text-3xl font-semibold">
+                {formatCentsToBRL(productVariant[0].priceInCents)}
+              </h2>
+              <QuantitySelector />
+            </section>
+            <Subtitle>{formatCentsToBRL(2210)}</Subtitle>
           </main>
           <section className="flex flex-col justify-around space-y-3">
             <button className="bg-secondary w-full text-white">
@@ -101,12 +114,15 @@ const ProductDetailPage = ({ slug }: IProductDetailPageProps) => {
         </header>
       </section>
 
-      <section className="flex flex-col space-y-6 md:flex-row md:justify-around md:space-y-0 md:space-x-6">
-        <header className="mr-auto">
-          <HighLightTitle>Related Products</HighLightTitle>
-          <Subtitle>See related products too</Subtitle>
-        </header>
-      </section>
+      <Section>
+        <HighLightTitle>Related Products</HighLightTitle>
+        <Subtitle>See related products too</Subtitle>
+        {popularProductsLoading && <div>Loading...</div>}
+        {popularProductsError && <div>Error loading products</div>}
+        <div className="mt-8 py-4">
+          {popularProducts && <ProductList products={popularProducts.data} />}
+        </div>
+      </Section>
     </MainContainer>
   );
 };

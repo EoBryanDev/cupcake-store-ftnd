@@ -3,15 +3,15 @@ import { NavMenu } from "@/src/components/menus/nav-menu";
 import { ProductDetailPage } from "@/src/components/pages/product-detail";
 
 interface IProductVariantsPageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; var_slug: string }>;
 }
 const ProductVariantPage = async ({ params }: IProductVariantsPageProps) => {
-  const { slug } = await params;
+  const { slug, var_slug } = await params;
 
   return (
     <>
       <NavMenu />
-      <ProductDetailPage slug={slug} />
+      <ProductDetailPage slug={slug} varSlug={var_slug} />
       <MainFooter />
     </>
   );
