@@ -12,6 +12,7 @@ import VariantSelector from "../products/variant-selector";
 import { QuantitySelector } from "../products/quantity-selector";
 import { ProductList } from "../products/product-list";
 import { useProductVariantQuery } from "@/src/hooks/queries/useProductVariants";
+import { TableInverted } from "../table/table-inverted";
 
 interface IProductDetailPageProps {
   slug: string;
@@ -44,6 +45,17 @@ const ProductDetailPage = ({ slug, varSlug }: IProductDetailPageProps) => {
   }
 
   const productVariant = product.data.variants;
+  const productDetails = {
+    id: product.data.variants[0].productVariantId,
+    description: product.data.variants[0].description,
+    unit: product.data.unit,
+    color: product.data.variants[0].color,
+    width: product.data.variants[0].width,
+    height: product.data.variants[0].height,
+    weight: product.data.variants[0].weight,
+    size: product.data.variants[0].size,
+    rawMaterial: product.data.variants[0].rawMaterial,
+  };
   return (
     <MainContainer>
       <section className="flex flex-col space-y-6 md:flex-row md:justify-around md:space-y-0 md:space-x-6">
@@ -107,11 +119,14 @@ const ProductDetailPage = ({ slug, varSlug }: IProductDetailPageProps) => {
 
       <hr className="my-8 mr-auto ml-auto w-1/2" />
 
-      <section className="flex flex-col space-y-6 md:flex-row md:justify-around md:space-y-0 md:space-x-6">
-        <header className="mr-auto">
+      <section className="flex flex-col space-y-6 md:justify-around md:space-y-0 md:space-x-6">
+        <header className="mr-auto mb-8">
           <HighLightTitle>Product Details</HighLightTitle>
           <Subtitle>See more about</Subtitle>
         </header>
+        <main className="mr-auto w-full md:w-1/3">
+          <TableInverted productInfo={productDetails} />
+        </main>
       </section>
 
       <Section>
