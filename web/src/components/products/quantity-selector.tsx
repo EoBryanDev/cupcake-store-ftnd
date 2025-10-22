@@ -3,9 +3,14 @@ import { useState } from "react";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { Button } from "../ui/button";
 
-const QuantitySelector = () => {
-  const [quantity, setQuantity] = useState(1);
-
+interface IQuantitySelectorProps {
+  quantity: number;
+  setQuantity: React.Dispatch<React.SetStateAction<number>>;
+}
+const QuantitySelector = ({
+  quantity,
+  setQuantity,
+}: IQuantitySelectorProps) => {
   const handleDecrement = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
   };

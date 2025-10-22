@@ -13,12 +13,16 @@ import { QuantitySelector } from "../products/quantity-selector";
 import { ProductList } from "../products/product-list";
 import { useProductVariantQuery } from "@/src/hooks/queries/useProductVariants";
 import { TableInverted } from "../table/table-inverted";
+import { useState } from "react";
+import AddToCartButton from "../buttons/add-cart-button";
+import BuyNowButton from "../buttons/buy-now-button";
 
 interface IProductDetailPageProps {
   slug: string;
   varSlug: string;
 }
 const ProductDetailPage = ({ slug, varSlug }: IProductDetailPageProps) => {
+  const [quantity, setQuantity] = useState(1);
   const {
     data: product,
     isLoading: productLoading,
@@ -100,15 +104,19 @@ const ProductDetailPage = ({ slug, varSlug }: IProductDetailPageProps) => {
               <h2 className="text-3xl font-semibold">
                 {formatCentsToBRL(productVariant[0].priceInCents)}
               </h2>
-              <QuantitySelector />
+              <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
             </section>
             <Subtitle>{formatCentsToBRL(2210)}</Subtitle>
           </main>
           <section className="flex flex-col justify-around space-y-3">
-            <button className="bg-secondary w-full text-white">
-              Adicionar ao carrinho
-            </button>
-            <button className="bg-primary w-full text-white">Comprar</button>
+            <AddToCartButton
+              productVariantId={productVariant[0].productVariantId}
+              quantity={quantity}
+            />
+            <BuyNowButton
+              productVariantId={productVariant[0].productVariantId}
+              quantity={quantity}
+            />
           </section>
         </section>
 
