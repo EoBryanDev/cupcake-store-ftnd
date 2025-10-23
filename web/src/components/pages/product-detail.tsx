@@ -16,6 +16,7 @@ import { TableInverted } from "../table/table-inverted";
 import { useState } from "react";
 import AddToCartButton from "../buttons/add-cart-button";
 import BuyNowButton from "../buttons/buy-now-button";
+import { useProductVariantByCategoryQuery } from "@/src/hooks/queries/useProductVariantByCategory";
 
 interface IProductDetailPageProps {
   slug: string;
@@ -30,10 +31,10 @@ const ProductDetailPage = ({ slug, varSlug }: IProductDetailPageProps) => {
   } = useProductVariantByIdQuery(slug);
 
   const {
-    data: popularProducts,
-    isLoading: popularProductsLoading,
-    error: popularProductsError,
-  } = useProductVariantQuery(null, { initialData: null });
+    data: relatedProducts,
+    isLoading: relatedProductsLoading,
+    error: relatedProductsError,
+  } = useProductVariantByCategoryQuery(slug);
 
   if (productError) {
     return notFound();
@@ -140,10 +141,10 @@ const ProductDetailPage = ({ slug, varSlug }: IProductDetailPageProps) => {
       <Section>
         <HighLightTitle>Related Products</HighLightTitle>
         <Subtitle>See related products too</Subtitle>
-        {popularProductsLoading && <div>Loading...</div>}
-        {popularProductsError && <div>Error loading products</div>}
+        {relatedProductsLoading && <div>Loading...</div>}
+        {relatedProductsError && <div>Error loading products</div>}
         <div className="mt-8 py-4">
-          {popularProducts && <ProductList products={popularProducts.data} />}
+          {relatedProducts && <ProductList products={relatedProducts.data} />}
         </div>
       </Section>
     </MainContainer>

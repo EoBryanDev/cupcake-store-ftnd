@@ -66,11 +66,18 @@ interface IProductVariantBySlugResponse {
   error: string;
 };
 
+interface IProductVariantBySlugCategoryResponse {
+  data: IProduct[];
+  total: null;
+  error: string;
+};
+
 export type {
   IProductVariant,
   ICategory,
   IProduct,
   IPagination,
   IProductResponse,
-  IProductVariantBySlugResponse
+  IProductVariantBySlugResponse,
+  IProductVariantBySlugCategoryResponse
 }

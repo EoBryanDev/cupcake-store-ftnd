@@ -1,4 +1,4 @@
-import { IProductResponse, IProductVariantBySlugResponse } from "../interface/IProductVariant";
+import { IProductResponse, IProductVariantBySlugCategoryResponse, IProductVariantBySlugResponse } from "../interface/IProductVariant";
 
 const API_INTERNAL_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -51,4 +51,29 @@ const getProductVariantBySlug = async (slug: string): Promise<IProductVariantByS
     return data;
 }
 
-export { getProductVariant, getProductVariantBySlug }
+const getProductVariantBySlugCategory = async (slug: string): Promise<IProductVariantBySlugCategoryResponse> => {
+
+    const response = await fetch(`${API_INTERNAL_URL}/products/${slug}/variants/categories`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        // throw new Error(error.message || 'Something was wrong with the request');
+        return error
+    }
+
+    const data: IProductVariantBySlugCategoryResponse = await response.json();
+
+    // Validação básica (opcional mas recomendado)
+    if (!data || !data.data) {
+        throw new Error('Invalid response format');
+    }
+
+    return data;
+}
+
+export { getProductVariant, getProductVariantBySlug, getProductVariantBySlugCategory }
