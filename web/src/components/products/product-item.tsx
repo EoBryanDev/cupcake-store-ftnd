@@ -20,17 +20,21 @@ const ProductItem = ({
       href={`/products/${product.slug}/variants/${firstVariant.slug}`}
       className="flex flex-col gap-4"
     >
-      <Image
-        src={
-          firstVariant.imageUrl ??
-          "https://pub-3487eb3e73174ed99e160777dbdb7a0f.r2.dev/cupcake_halloween.png"
-        }
-        alt={firstVariant.name}
-        width={0}
-        height={0}
-        sizes="100vw"
-        className="h-auto min-h-[300px] w-auto min-w-[300px] rounded-3xl object-cover"
-      />
+      <div className="relative h-[250px] w-[250px]">
+        <Image
+          src={
+            firstVariant.imageUrl ??
+            "https://pub-3487eb3e73174ed99e160777dbdb7a0f.r2.dev/cupcake_halloween.png"
+          }
+          alt={firstVariant.name}
+          fill
+          className="rounded-3xl object-cover"
+          // width={0}
+          // height={0}
+          // sizes="100vw"
+          // className="min-h-[300px] w-auto min-w-[300px] rounded-3xl"
+        />
+      </div>
       <div
         className={cn(
           "flex max-w-[200px] flex-col gap-1",
