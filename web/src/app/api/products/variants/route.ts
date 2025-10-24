@@ -7,9 +7,15 @@ const API_BACKEND_URL = process.env.NEXT_ENVIROMENT === 'DEV' ?
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
-    const view = searchParams.get('view');
+    const searchType = searchParams.get('searchType');
 
-    const url = `${API_BACKEND_URL}/products/variants${view ? `?view=${view}` : ''}`;
+    const offset = searchParams.get('offset');
+    const limit = searchParams.get('limit');
+    const order = searchParams.get('order');
+    const orderBy = searchParams.get('orderBy');
+    const currentPage = searchParams.get('currentPage');
+
+    const url = `${API_BACKEND_URL}/products/variants?searchType=${searchType}&offset=${offset}&limit=${limit}&order=${order}&orderBy=${orderBy}&currentPage=${currentPage}`;
 
     // Faz a requisição diretamente para o backend real, com o token
     const response = await fetch(url, {

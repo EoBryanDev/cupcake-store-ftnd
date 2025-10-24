@@ -1,14 +1,15 @@
+import { IPaginationDefault } from "@/src/interface/IPaginationDefault";
 import { IProductResponse } from "@/src/interface/IProductVariant";
 import { getProductVariant } from "@/src/services/product-variant.service";
 import { useQuery } from "@tanstack/react-query";
 
-const getProductVariantQueryKey = (view: string | null) => [`product-variants-${view}`] as const;
+const getProductVariantQueryKey = (params: IPaginationDefault) => [`product-variants`, params] as const;
 
-const useProductVariantQuery = (view: string | null, p0: { initialData: IProductResponse | null; }) => {
+const useProductVariantQuery = (paginationParams: IPaginationDefault) => {
   return useQuery<IProductResponse | null, Error>({
-    queryKey: getProductVariantQueryKey(view),
+    queryKey: getProductVariantQueryKey(paginationParams),
     queryFn: async () => {
-      const response: IProductResponse = await getProductVariant(view);
+      const response: IProductResponse = await getProductVariant(paginationParams);
 
       if (response) {
         return response;
@@ -16,8 +17,9 @@ const useProductVariantQuery = (view: string | null, p0: { initialData: IProduct
 
       return null
 
-    }
-  });
+    },
+
+  },);
 };
 
 export { getProductVariantQueryKey, useProductVariantQuery }

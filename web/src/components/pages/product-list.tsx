@@ -6,15 +6,15 @@ import { ProductGrid } from "../products/product-grid";
 import { HighLightTitle } from "../sections/titles/highlight-title";
 import { Subtitle } from "../sections/titles/subtitle";
 import { ProductGridPagination } from "../paginations/product-grid-pagination";
+import { paginationDefault } from "@/src/helpers/pagination-default";
 
 const ProductListPage = () => {
+  const defaultPagination = paginationDefault();
   const {
     data: varProducts,
     isError: varProductsError,
     isLoading: varProductsLoading,
-  } = useProductVariantQuery(null, {
-    initialData: null,
-  });
+  } = useProductVariantQuery(defaultPagination);
 
   return (
     <MainContainer>
