@@ -107,7 +107,9 @@ const ProductDetailPage = ({ slug, varSlug }: IProductDetailPageProps) => {
               </h2>
               <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
             </section>
-            <Subtitle>{formatCentsToBRL(2210)}</Subtitle>
+            <Subtitle>
+              {formatCentsToBRL(productVariant[0].priceInCents * quantity)}
+            </Subtitle>
           </main>
           <section className="flex flex-col justify-around space-y-3">
             <AddToCartButton
