@@ -20,7 +20,7 @@ const ProductItem = ({
       href={`/products/${product.slug}/variants/${firstVariant.slug}`}
       className="flex flex-col gap-4"
     >
-      <div className="relative h-[250px] w-[250px]">
+      <div className="relative aspect-square w-[200px] shrink-0">
         <Image
           src={
             firstVariant.imageUrl ??
