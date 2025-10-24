@@ -1,37 +1,25 @@
 "use client";
-import { useProductVariantQuery } from "@/src/hooks/queries/useProductVariants";
 import { MainContainer } from "../containers/main-container";
 import { ProductList } from "../products/product-list";
 import { Section } from "../sections/section";
 import { HighLightTitle } from "../sections/titles/highlight-title";
 import { Subtitle } from "../sections/titles/subtitle";
 import { PromoBanner } from "../banners/promo-banner";
-import { IProductResponse } from "@/src/interface/IProductVariant";
+import { useProductVariantPopularQuery } from "@/src/hooks/queries/useProductVariantsPopular";
+import { useProductVariantNewestQuery } from "@/src/hooks/queries/useProductVariantsNewest";
 
-interface IHomePage {
-  initialNwstVariantProd: IProductResponse | null;
-  initialPopularVariantProd: IProductResponse | null;
-}
-
-function HomePage({
-  initialNwstVariantProd,
-  initialPopularVariantProd,
-}: IHomePage) {
+function HomePage() {
   const {
     data: newestProducts,
     isLoading: newestProductsLoading,
     error: newestProductsError,
-  } = useProductVariantQuery("newest", {
-    initialData: initialNwstVariantProd,
-  });
+  } = useProductVariantNewestQuery();
 
   const {
     data: popularProducts,
     isLoading: popularProductsLoading,
     error: popularProductsError,
-  } = useProductVariantQuery(null, {
-    initialData: initialPopularVariantProd,
-  });
+  } = useProductVariantPopularQuery();
   return (
     <main>
       <MainContainer>

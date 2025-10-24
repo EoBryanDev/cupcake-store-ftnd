@@ -11,7 +11,6 @@ import { Subtitle } from "../sections/titles/subtitle";
 import VariantSelector from "../products/variant-selector";
 import { QuantitySelector } from "../products/quantity-selector";
 import { ProductList } from "../products/product-list";
-import { useProductVariantQuery } from "@/src/hooks/queries/useProductVariants";
 import { TableInverted } from "../table/table-inverted";
 import { useState } from "react";
 import AddToCartButton from "../buttons/add-cart-button";
