@@ -56,7 +56,7 @@ interface IPagination {
 // Tipo para a resposta completa da API
 interface IProductResponse {
   data: IProduct[];
-  total: null;
+  pagination: IPagination;
   error: string;
 };
 
