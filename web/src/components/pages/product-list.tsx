@@ -1,21 +1,22 @@
-'use client';
-import { useProductVariantQuery } from '@/src/hooks/queries/useProductVariants';
-import { MainContainer } from '../containers/main-container';
-import { CategoryNavigation, IFilters } from '../menus/category-nav';
-import { ProductGrid } from '../products/product-grid';
-import { HighLightTitle } from '../sections/titles/highlight-title';
-import { Subtitle } from '../sections/titles/subtitle';
-import { ProductGridPagination } from '../paginations/product-grid-pagination';
-import { useEffect, useState } from 'react';
-import { paginationDefault } from '@/src/helpers/pagination-default';
-import { useSearchParams } from 'next/navigation';
-import { IPaginationDefault } from '@/src/interface/IPaginationDefault';
+"use client";
+import { useProductVariantQuery } from "@/src/hooks/queries/useProductVariants";
+import { MainContainer } from "../containers/main-container";
+import { CategoryNavigation, IFilters } from "../menus/category-nav";
+import { ProductGrid } from "../products/product-grid";
+import { HighLightTitle } from "../sections/titles/highlight-title";
+import { Subtitle } from "../sections/titles/subtitle";
+import { ProductGridPagination } from "../paginations/product-grid-pagination";
+import { useEffect, useState } from "react";
+import { paginationDefault } from "@/src/helpers/pagination-default";
+import { useSearchParams } from "next/navigation";
+import { IPaginationDefault } from "@/src/interface/IPaginationDefault";
 
 const ProductListPage = () => {
   const searchParams = useSearchParams();
-  const page = searchParams.get('page') ?? '1';
+  const page = searchParams.get("page") ?? "1";
 
-  const [pagination, setPagination] = useState<IPaginationDefault>(paginationDefault());
+  const [pagination, setPagination] =
+    useState<IPaginationDefault>(paginationDefault());
   const [filters, setFilters] = useState<IFilters>({
     colors: [],
     sizes: [],
@@ -47,14 +48,14 @@ const ProductListPage = () => {
   return (
     <MainContainer>
       <main className="flex">
-        <aside className="w-1/3">
+        <aside className="hidden md:block md:w-1/3">
           <header className="mr-auto mb-8">
             <HighLightTitle>Filters</HighLightTitle>
           </header>
           <CategoryNavigation filters={filters} setFilters={setFilters} />
         </aside>
-        <section className="w-2/3">
-          <header className="mr-auto mb-8">
+        <section className="flex w-full flex-col items-center justify-between md:block md:w-2/3">
+          <header className="mb-8 md:mr-auto">
             <HighLightTitle>Products</HighLightTitle>
             <Subtitle>
               Explore our products and be plesured with our yummies
