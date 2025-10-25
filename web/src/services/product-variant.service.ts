@@ -1,5 +1,7 @@
+import { IFilters } from "../components/menus/category-nav";
 import { IPaginationDefault } from "../interface/IPaginationDefault";
 import { IProductPreviewPagination } from "../interface/IPaginationPreview";
+import { IProductFiltersCategory } from "../interface/IProductFilters";
 import { IProductResponse, IProductVariantBySlugCategoryResponse, IProductVariantBySlugResponse } from "../interface/IProductVariant";
 
 const API_INTERNAL_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -30,8 +32,9 @@ const getProductVariantPreview = async (paginationPreview: IProductPreviewPagina
     return data;
 }
 
-const getProductVariant = async (params: IPaginationDefault): Promise<IProductResponse> => {
+const getProductVariant = async (params: IPaginationDefault, filters: IFilters): Promise<IProductResponse> => {
     const query = new URLSearchParams();
+
 
     if (params.offset) query.set("offset", String(params.offset));
     if (params.limit) query.set("limit", String(params.limit));
@@ -39,6 +42,12 @@ const getProductVariant = async (params: IPaginationDefault): Promise<IProductRe
     if (params.orderBy) query.set("orderBy", params.orderBy);
     if (params.currentPage) query.set("currentPage", String(params.currentPage));
     if (params.searchType) query.set("searchType", params.searchType);
+
+    filters.colors.forEach(color => query.append('colors', color));
+    filters.sizes.forEach(size => query.append('sizes', size));
+
+    if (filters.price[0] > 0) query.set('minPrice', String(filters.price[0]));
+    if (filters.price[1]) query.set('maxPrice', String(filters.price[1]));
 
     const response = await fetch(`${API_INTERNAL_URL}/products/variants?${query.toString()}`, {
         method: 'GET',
@@ -54,6 +63,33 @@ const getProductVariant = async (params: IPaginationDefault): Promise<IProductRe
     }
 
     const data: IProductResponse = await response.json();
+
+
+
+    // Validação básica (opcional mas recomendado)
+    if (!data || !data.data) {
+        throw new Error('Invalid response format');
+    }
+
+    return data;
+}
+
+const getProductFilters = async (): Promise<IProductFiltersCategory> => {
+
+    const response = await fetch(`${API_INTERNAL_URL}/products/filters`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        // throw new Error(error.message || 'Something was wrong with the request');
+        return error
+    }
+
+    const data: IProductFiltersCategory = await response.json();
 
     // Validação básica (opcional mas recomendado)
     if (!data || !data.data) {
@@ -113,4 +149,4 @@ const getProductVariantBySlugCategory = async (slug: string): Promise<IProductVa
     return data;
 }
 
-export { getProductVariantPreview, getProductVariant, getProductVariantBySlug, getProductVariantBySlugCategory }
+export { getProductVariantPreview, getProductVariant, getProductVariantBySlug, getProductVariantBySlugCategory, getProductFilters }
