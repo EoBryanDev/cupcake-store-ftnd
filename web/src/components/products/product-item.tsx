@@ -1,4 +1,4 @@
-import { formatCentsToBRL } from "@/src/helpers/money";
+import { formatCentsToBRL } from "@/src/helpers/format-cents-brlformated";
 import { IProduct } from "@/src/interface/IProductVariant";
 import { cn } from "@/src/lib/utils";
 import Image from "next/image";

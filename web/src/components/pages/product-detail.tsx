@@ -3,7 +3,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { MainContainer } from "../containers/main-container";
-import { formatCentsToBRL } from "@/src/helpers/money";
+import { formatCentsToBRL } from "@/src/helpers/format-cents-brlformated";
 import { useProductVariantByIdQuery } from "@/src/hooks/queries/useProductVariantBySlug";
 import { Section } from "../sections/section";
 import { HighLightTitle } from "../sections/titles/highlight-title";

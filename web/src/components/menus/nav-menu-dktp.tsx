@@ -41,7 +41,7 @@ export function NavMenuDesktop() {
             </div>
             <div className="flex items-center">
               <Link
-                href="/search"
+                href="/search?page=1"
                 className="hover:text-primary cursor-pointer text-sm"
               >
                 Search
