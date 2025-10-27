@@ -1,6 +1,6 @@
 import { MainFooter } from "@/src/components/footers/main-footer";
 import { NavMenu } from "@/src/components/menus/nav-menu";
-import { ProductListPage } from "@/src/components/pages/product-list";
+import { ProductListPage } from "@/src/components/pages/product-list-page";
 
 const SearchPage = async () => {
   return (
