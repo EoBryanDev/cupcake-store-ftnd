@@ -14,7 +14,7 @@ function SliderMenu() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="default" size="icon">
+        <Button variant="default" size="icon" className="cursor-pointer">
           <MenuIcon />
         </Button>
       </SheetTrigger>
@@ -56,11 +56,11 @@ function SliderMenu() {
               ) : ( */}
           <div className="flex items-center justify-between">
             <h2 className="font-semibold">Hello! Sign in your account !</h2>
-            <Button size="icon" asChild variant="default">
+            {/* <Button size="icon" asChild variant="default">
               <Link href="/login">
                 <LogInIcon />
               </Link>
-            </Button>
+            </Button> */}
           </div>
           {/* )} */}
         </div>

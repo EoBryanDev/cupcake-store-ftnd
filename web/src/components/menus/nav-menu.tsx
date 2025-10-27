@@ -1,9 +1,13 @@
 import { NavMenuDesktop } from "./nav-menu-dktp";
 
-function NavMenu() {
+interface INavMenuProps {
+  token?: { name: string; value: string } | undefined;
+}
+
+function NavMenu({ token }: INavMenuProps) {
   return (
     <>
-      <NavMenuDesktop />
+      <NavMenuDesktop token={token} />
     </>
   );
 }

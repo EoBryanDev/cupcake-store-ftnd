@@ -5,9 +5,13 @@ import { ThemeToggle } from "@/src/components/buttons/theme-toggle";
 import Link from "next/link";
 import { SliderMenu } from "./slider-menu";
 import { OrderButton } from "../buttons/order-button";
+import { UserButton } from "../buttons/user-button";
 // import { SearchInput } from "../inputs/search-input";
+interface INavMenuProps {
+  token: { name: string; value: string } | undefined;
+}
 
-export function NavMenuDesktop() {
+export function NavMenuDesktop({ token }: INavMenuProps) {
   return (
     <header className="bg-card border-b">
       <div className="flex items-baseline justify-between px-4 py-4 sm:px-6">
@@ -52,7 +56,13 @@ export function NavMenuDesktop() {
 
         <div className="flex w-1/3 items-center justify-end space-x-2 sm:space-x-4">
           {/* <SearchInput /> */}
-          <OrderButton />
+
+          {!token && (
+            <Link href="/login" className="cursor-pointer">
+              <UserButton />
+            </Link>
+          )}
+          {token && <OrderButton />}
           <ThemeToggle />
           <SliderMenu />
         </div>
