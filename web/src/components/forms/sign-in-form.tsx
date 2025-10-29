@@ -20,49 +20,31 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { signInSchema, TSignInSchema } from "@/src/schemas/sign-in-schema";
+import { toast } from "sonner";
+import { useLogin } from "@/src/hooks/mutations/useLogin";
 
 const SignInForm = () => {
-  const router = useRouter();
+  // const router = useRouter();
+  const userLogin = useLogin();
   const sign_in_form = useForm<any>({
-    // resolver: zodResolver(signInSchema),
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  // const onSubmit = async (values: TSignInSchema) => {
-  //   await authClient.signIn.email({
-  //     email: values.email,
-  //     password: values.password,
-  //     fetchOptions: {
-  //       onSuccess: () => {
-  //         router.push("/");
-  //       },
-  //       onError: (ctx) => {
-  //         if (ctx.error.code === "USER_NOT_FOUND") {
-  //           toast.error("E-mail não encontrado");
-  //           return sign_in_form.setError("email", {
-  //             message: "E-mail não encontrado",
-  //           });
-  //         }
-  //         if (ctx.error.code === "INVALID_EMAIL_OR_PASSWORD") {
-  //           toast.error("E-mail ou senha inválido");
-  //           return sign_in_form.setError("email", {
-  //             message: "E-mail ou senha inválido",
-  //           });
-  //         }
-  //         toast.error(ctx.error.message);
-  //       },
-  //     },
-  //   });
-  // };
+  const onSubmit = async (values: TSignInSchema) => {
+    try {
+      await userLogin.mutateAsync(values);
+      toast.success("Login done successfully! Wait to be redirected!");
 
-  // const handleSignInWithGoogle = async () => {
-  //   await authClient.signIn.social({
-  //     provider: "google",
-  //   });
-  // };
+      sign_in_form.reset;
+    } catch (error) {
+      toast.error("There was not possible login!");
+    }
+  };
 
   return (
     <>
@@ -73,7 +55,7 @@ const SignInForm = () => {
         </CardHeader>
         <Form {...sign_in_form}>
           <form
-            // onSubmit={sign_in_form.handleSubmit(onSubmit)}
+            onSubmit={sign_in_form.handleSubmit(onSubmit)}
             className="space-y-8"
           >
             <CardContent className="grid gap-6">
