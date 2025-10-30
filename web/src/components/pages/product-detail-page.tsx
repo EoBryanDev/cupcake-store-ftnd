@@ -112,19 +112,25 @@ const ProductDetailPage = ({ slug, varSlug }: IProductDetailPageProps) => {
           </main>
           <section className="flex flex-col justify-around space-y-3">
             <AddToCartButton
-              productVariantId={productVariant[0].productVariantId}
-              quantity={quantity}
+              product={{
+                productVariantId: productVariant[0].productVariantId,
+                name: productVariant[0].name,
+                priceInCents: productVariant[0].priceInCents,
+                imageUrl: productVariant[0].imageUrl || "",
+                quantity: quantity,
+              }}
             />
             <BuyNowButton
-              productVariantId={productVariant[0].productVariantId}
-              quantity={quantity}
+              product={{
+                productVariantId: productVariant[0].productVariantId,
+                name: productVariant[0].name,
+                priceInCents: productVariant[0].priceInCents,
+                imageUrl: productVariant[0].imageUrl || "",
+                quantity: quantity,
+              }}
             />
           </section>
         </section>
-
-        {/* <ProductActions productVariantId={productVariant.id} /> */}
-
-        {/* <ProductList products={likelyProducts} /> */}
       </section>
 
       <hr className="my-8 mr-auto ml-auto w-1/2" />

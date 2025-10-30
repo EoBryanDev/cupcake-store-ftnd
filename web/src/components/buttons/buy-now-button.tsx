@@ -2,12 +2,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
+import { ICartItem } from "@/src/interface/ICart";
 
 interface IBuyNowButtonProps {
-  productVariantId: string;
-  quantity: number;
+  product: ICartItem;
 }
-const BuyNowButton = ({ productVariantId, quantity }: IBuyNowButtonProps) => {
+const BuyNowButton = ({ product }: IBuyNowButtonProps) => {
   // const queryClient = useQueryClient();
   // const { mutate, isPending } = useMutation({
   //   mutationKey: ["addProductToCart", productVariantId, quantity],
