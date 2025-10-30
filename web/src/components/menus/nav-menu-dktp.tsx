@@ -64,7 +64,7 @@ export function NavMenuDesktop({ token }: INavMenuProps) {
           )}
           {token && <OrderButton />}
           <ThemeToggle />
-          <SliderMenu />
+          <SliderMenu token={token} />
         </div>
       </div>
     </header>
