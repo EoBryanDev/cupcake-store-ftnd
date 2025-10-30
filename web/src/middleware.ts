@@ -19,11 +19,8 @@ const REDIRECT_WHEN_AUTHENTICATED_ROUTE = '/';
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const authToken = request.cookies.get(TOKEN_KEY);
-  console.log(authToken);
-  console.log(path);
 
-
-
+  // Verifica se é uma rota pública
   const publicRoute = publicRoutes.find(route => {
     if (typeof route.path === 'string') {
       return route.path === path;
@@ -35,21 +32,46 @@ export async function middleware(request: NextRequest) {
   let isValidToken = false;
   let tokenExpired = false;
 
+  // Valida o token se existir
   if (authToken) {
     try {
+
       await jwtVerify(authToken.value, JWT_SECRET);
       isValidToken = true;
     } catch (error: any) {
-      console.error('Token validation failed:', error);
 
 
       if (error.code === 'ERR_JWT_EXPIRED' || error.message?.includes('expired')) {
         tokenExpired = true;
-        console.log('Token expired, will redirect to login');
+
       }
     }
   }
-  if ((!isValidToken || tokenExpired) && !publicRoute) {
+
+  // Se for rota pública
+  if (publicRoute) {
+    // PRIMEIRO: Se estiver autenticado e a rota exigir redirect quando autenticado
+    if (isValidToken && publicRoute.whenAuthenticated === 'redirect') {
+      const redirectUrl = request.nextUrl.clone();
+      redirectUrl.pathname = REDIRECT_WHEN_AUTHENTICATED_ROUTE;
+      return NextResponse.redirect(redirectUrl);
+    }
+
+    // SEGUNDO: Remove token expirado mas permite acesso à rota pública
+    // (só executa se não retornou no bloco acima)
+    if (tokenExpired) {
+      const response = NextResponse.next();
+      response.cookies.delete(TOKEN_KEY);
+
+      return response;
+    }
+
+    // TERCEIRO: Permite acesso à rota pública
+    return NextResponse.next();
+  }
+
+  // Se não for rota pública e não estiver autenticado, redireciona
+  if (!isValidToken || tokenExpired) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
 
@@ -57,17 +79,13 @@ export async function middleware(request: NextRequest) {
 
     if (authToken) {
       response.cookies.delete(TOKEN_KEY);
-      console.log('Removed expired/invalid token from cookies');
+
     }
 
     return response;
   }
-  if (isValidToken && publicRoute && publicRoute.whenAuthenticated === 'redirect') {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = REDIRECT_WHEN_AUTHENTICATED_ROUTE;
-    return NextResponse.redirect(redirectUrl);
-  }
 
+  // Usuário autenticado acessando rota protegida
   return NextResponse.next();
 }
 
