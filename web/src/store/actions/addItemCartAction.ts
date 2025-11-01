@@ -1,12 +1,16 @@
-import { ICart } from "@/src/interface/ICart";
+import { calculateTotals } from "@/src/helpers/calculateTotals";
+import { ICart, ICartItem } from "@/src/interface/ICart";
 
-const addItemCartAction = (item: any, state: ICart) => {
+const addItemCartAction = (item: ICartItem, state: ICart) => {
+
   if (!state.cart) {
     return {
       cart: {
         cart_id: crypto.randomUUID(),
         created_at: new Date().toISOString(),
-        items: [item]
+        items: [item],
+        totalItems: item.quantity,
+        total: item.priceInCents,
       }
     };
   }
@@ -15,22 +19,21 @@ const addItemCartAction = (item: any, state: ICart) => {
     (cartItem) => cartItem.productVariantId === item.productVariantId
   );
 
+  let updatedItems: ICartItem[];
+
   if (existingItemIndex > -1) {
-    const updatedItems = [...state.cart.items];
-    updatedItems[existingItemIndex].quantity += item.quantity;
-    return {
-      cart: {
-        ...state.cart,
-        items: updatedItems
-      }
-    };
+    updatedItems = state.cart.items.map((cartItem, index) =>
+      index === existingItemIndex
+        ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
+        : cartItem
+    );
+  } else {
+    updatedItems = [...state.cart.items, item];
   }
 
+  const { totalItems, total } = calculateTotals(updatedItems);
   return {
-    cart: {
-      ...state.cart,
-      items: [...state.cart.items, item]
-    }
+    cart: { ...state.cart, items: updatedItems, totalItems, total }
   };
 }
 

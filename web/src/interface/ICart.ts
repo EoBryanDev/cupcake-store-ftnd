@@ -9,7 +9,9 @@ interface ICart {
   cart: {
     cart_id: string;
     created_at: string;
-    items: Array<ICartItem>
+    items: Array<ICartItem>;
+    total?: number;
+    totalItems?: number;
   } | null;
 }
 

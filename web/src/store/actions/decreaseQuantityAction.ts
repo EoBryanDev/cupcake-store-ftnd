@@ -1,3 +1,4 @@
+import { calculateTotals } from "@/src/helpers/calculateTotals";
 import { ICart, ICartItem } from "@/src/interface/ICart";
 
 const decreaseQuantityAction = (productVariantId: string, state: ICart) => {
@@ -13,10 +14,14 @@ const decreaseQuantityAction = (productVariantId: string, state: ICart) => {
     })
     .filter((item): item is ICartItem => item !== null);
 
+  const { totalItems, total } = calculateTotals(updatedItems);
+
   return {
     cart: {
       ...state.cart,
-      items: updatedItems
+      items: updatedItems,
+      totalItems,
+      total,
     }
   };
 };
