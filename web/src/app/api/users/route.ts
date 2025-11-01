@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     }, { status: 201 });
 
     res.cookies.set(TOKEN_KEY, token, {
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
       maxAge: expires_in,
       path: '/',

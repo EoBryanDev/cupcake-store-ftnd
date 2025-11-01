@@ -6,12 +6,12 @@ import Link from "next/link";
 import { SliderMenu } from "./slider-menu";
 import { OrderButton } from "../buttons/order-button";
 import { UserButton } from "../buttons/user-button";
+import { useCookie } from "@/src/helpers/get-cookie";
 // import { SearchInput } from "../inputs/search-input";
-interface INavMenuProps {
-  token: { name: string; value: string } | undefined;
-}
 
-export function NavMenuDesktop({ token }: INavMenuProps) {
+export function NavMenuDesktop() {
+  const cookie = useCookie("ck-store-key");
+
   return (
     <header className="bg-card border-b">
       <div className="flex items-baseline justify-between px-4 py-4 sm:px-6">
@@ -57,14 +57,14 @@ export function NavMenuDesktop({ token }: INavMenuProps) {
         <div className="flex w-1/3 items-center justify-end space-x-2 sm:space-x-4">
           {/* <SearchInput /> */}
 
-          {!token && (
+          {!cookie && (
             <Link href="/login" className="cursor-pointer">
               <UserButton />
             </Link>
           )}
-          {token && <OrderButton />}
+          {cookie && <OrderButton />}
           <ThemeToggle />
-          <SliderMenu token={token} />
+          <SliderMenu />
         </div>
       </div>
     </header>
