@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { ICartStore } from '../interface/ICart';
+import { ICartStore } from '../../interface/ICart';
 import { addItemCartAction } from './actions/addItemCartAction';
 import { removeItemCartAction } from './actions/removeItemCartAction';
 import { increaseQuantityAction } from './actions/increaseQuantityAction';

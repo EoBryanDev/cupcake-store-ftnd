@@ -1,5 +1,5 @@
 import { formatCentsToBRL } from "@/src/helpers/format-cents-brlformated";
-import useCartStore from "@/src/store/useCartStore";
+import useCartStore from "@/src/store/cart-store/useCartStore";
 import CheckoutButton from "../buttons/checkout-button";
 import { useCookie } from "@/src/helpers/get-cookie";
 
@@ -42,6 +42,7 @@ const CartCheckout = () => {
             <CheckoutButton
               disabled={!cookie}
               noLoginMsg="To checkout login first"
+              link={"/checkout"}
             />
           </footer>
         </div>

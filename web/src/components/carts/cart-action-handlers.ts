@@ -1,5 +1,5 @@
 import { ICartItem } from "@/src/interface/ICart";
-import useCartStore from "@/src/store/useCartStore";
+import useCartStore from "@/src/store/cart-store/useCartStore";
 import { toast } from "sonner";
 
 export const handleAddToCart = (item: ICartItem) => {

@@ -1,5 +1,5 @@
 "use client";
-import useCartStore from "@/src/store/useCartStore";
+import useCartStore from "@/src/store/cart-store/useCartStore";
 import { CartItem } from "./cart-item";
 import { ScrollArea } from "../ui/scroll-area";
 import { SearchIcon } from "lucide-react";
