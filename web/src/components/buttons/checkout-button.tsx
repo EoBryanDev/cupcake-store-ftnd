@@ -6,8 +6,13 @@ import { Button } from "../ui/button";
 interface ICheckoutButtonProps {
   disabled: boolean;
   noLoginMsg: string;
+  link: string;
 }
-const CheckoutButton = ({ disabled, noLoginMsg }: ICheckoutButtonProps) => {
+const CheckoutButton = ({
+  disabled,
+  noLoginMsg,
+  link,
+}: ICheckoutButtonProps) => {
   return (
     <div>
       {disabled && <p className="text-primary text-sm italic">{noLoginMsg}</p>}
@@ -17,7 +22,7 @@ const CheckoutButton = ({ disabled, noLoginMsg }: ICheckoutButtonProps) => {
         disabled={disabled}
         variant={disabled ? "outline" : "default"}
       >
-        <Link href="/checkout" className="cursor-pointer text-sm">
+        <Link href={link} className="cursor-pointer text-sm">
           Checkout
         </Link>
       </Button>
