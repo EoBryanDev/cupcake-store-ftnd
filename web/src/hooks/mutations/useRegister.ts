@@ -15,7 +15,6 @@ export function useRegister() {
       return createUser(userData);
     },
     onSuccess: (data: ILogin) => {
-      console.log(data);
 
       const userSession = useSession('user');
 

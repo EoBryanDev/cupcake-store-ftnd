@@ -7,7 +7,7 @@ const Checkout = () => {
   return (
     <main className="flex h-screen flex-col">
       <CheckoutMenu />
-      <main className="flex flex-1 items-center justify-center">
+      <main className="w-full flex-1 p-8">
         <MainContainer>
           <CheckoutPage />
         </MainContainer>

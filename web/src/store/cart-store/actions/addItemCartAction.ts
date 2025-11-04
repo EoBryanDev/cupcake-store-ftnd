@@ -10,7 +10,7 @@ const addItemCartAction = (item: ICartItem, state: ICart) => {
         created_at: new Date().toISOString(),
         items: [item],
         totalItems: item.quantity,
-        total: item.priceInCents,
+        total: item.priceInCents * item.quantity,
       }
     };
   }
