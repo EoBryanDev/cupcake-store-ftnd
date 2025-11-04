@@ -1,9 +1,11 @@
+import { IAddressSchema } from "../components/adresses/schemas";
+import { IAddressResponse } from "../interface/IAddress";
 import { TSignInSchema } from "../schemas/sign-in-schema";
 import { TSignUpSchema } from "../schemas/sign-up-schema";
 
 const API_INTERNAL_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export async function createUser(newUserData: TSignUpSchema) {
+async function createUser(newUserData: TSignUpSchema) {
   const response = await fetch(`${API_INTERNAL_URL}/users`, {
     method: 'POST',
     headers: {
@@ -40,22 +42,60 @@ const login = async (loginPayload: TSignInSchema) => {
   return response.json();
 }
 
-// export async function getUserInfo() {
+const getUserAddress = async () => {
+  const response = await fetch(`${API_INTERNAL_URL}/addresses`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
-//     const response = await fetch(`${API_INTERNAL_URL}/users`, {
-//         method: 'GET',
-//     });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Fail to get user addresses');
+  }
 
-//     if (!response.ok) {
-//         const error = await response.json();
-//         return { success: false, data: null, error: error.message };
-//     }
+  return response.json();
+}
 
-//     if (response.status === 204) {
-//         return { success: true, data: null };
-//     }
+const createUserAddress = async (addressPayload: IAddressSchema): Promise<IAddressResponse> => {
+  const response = await fetch(`${API_INTERNAL_URL}/addresses`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(addressPayload),
+  });
 
-//     return response.json();
-// }
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Fail to create user addresses');
+  }
 
-export { login }
+  return response.json();
+}
+const updateUserAddress = async (addressPayload: IAddressSchema): Promise<IAddressResponse> => {
+  const response = await fetch(`${API_INTERNAL_URL}/addresses`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(addressPayload),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Fail to create user addresses');
+  }
+
+  return response.json();
+}
+
+
+export {
+  login,
+  createUser,
+  getUserAddress,
+  createUserAddress,
+  updateUserAddress
+}
