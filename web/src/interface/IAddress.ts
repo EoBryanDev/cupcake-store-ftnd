@@ -15,7 +15,7 @@ interface IAddress {
   createdAt: string
 }
 interface IAddressResponse {
-  data: IAddress[];
+  data: IAddress[] | null;
   error: string;
 };
 

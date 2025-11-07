@@ -9,13 +9,17 @@ export const useUpdateAddressMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: updateUpdateAddressMutationKey(),
-    mutationFn: async (addressPayload: IAddressSchema) => {
-      return updateUserAddress(addressPayload);
+    mutationFn: async ({
+      address_id,
+      data
+    }: {
+      address_id: string;
+      data: IAddressSchema
+    }) => {
+      return updateUserAddress(address_id, data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: getUserAddressQueryKey() });
-
-
     },
     onError: (error) => {
       return `Login Error: ${error.message}`

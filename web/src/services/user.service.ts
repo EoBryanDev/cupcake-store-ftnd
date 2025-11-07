@@ -58,6 +58,22 @@ const getUserAddress = async () => {
   return response.json();
 }
 
+const deleteUserAddress = async (address_id: string) => {
+  const response = await fetch(`${API_INTERNAL_URL}/addresses/${address_id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Fail to get user addresses');
+  }
+
+  return response.json();
+}
+
 const createUserAddress = async (addressPayload: IAddressSchema): Promise<IAddressResponse> => {
   const response = await fetch(`${API_INTERNAL_URL}/addresses`, {
     method: 'POST',
@@ -74,8 +90,8 @@ const createUserAddress = async (addressPayload: IAddressSchema): Promise<IAddre
 
   return response.json();
 }
-const updateUserAddress = async (addressPayload: IAddressSchema): Promise<IAddressResponse> => {
-  const response = await fetch(`${API_INTERNAL_URL}/addresses`, {
+const updateUserAddress = async (address_id: string, addressPayload: IAddressSchema): Promise<IAddressResponse> => {
+  const response = await fetch(`${API_INTERNAL_URL}/addresses/${address_id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -85,7 +101,7 @@ const updateUserAddress = async (addressPayload: IAddressSchema): Promise<IAddre
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.message || 'Fail to create user addresses');
+    throw new Error(error.message || 'Fail to update user address');
   }
 
   return response.json();
@@ -97,5 +113,6 @@ export {
   createUser,
   getUserAddress,
   createUserAddress,
-  updateUserAddress
+  updateUserAddress,
+  deleteUserAddress
 }

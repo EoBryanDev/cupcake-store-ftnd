@@ -5,9 +5,10 @@ import { NextRequest, NextResponse } from "next/server";
 const API_BACKEND_URL = process.env.NEXT_ENVIROMENT === 'DEV' ?
   process.env.NEXT_PUBLIC_WS_DEV : process.env.NEXT_PUBLIC_WS_PROD;
 
-export async function GET(_request: NextRequest) {
+export async function DELETE(_request: NextRequest, { params }: { params: Promise<{ address_id: string }> }) {
   try {
-    const token = await getAuthTokenServer()
+    const { address_id } = await params;
+    const token = await getAuthTokenServer();
 
     if (!token) {
 
@@ -17,18 +18,17 @@ export async function GET(_request: NextRequest) {
       );
     }
 
-    const url = `${API_BACKEND_URL}/addresses`;
-
+    const url = `${API_BACKEND_URL}/addresses/${address_id}`;
 
     const response = await fetch(url, {
-      method: 'GET',
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
     });
 
-    const data: IAddressResponse = await response.json();
+    const data: { data: null, error: string } = await response.json();
     return NextResponse.json(data, { status: response.status });
   } catch (error) {
     return NextResponse.json(
@@ -37,9 +37,12 @@ export async function GET(_request: NextRequest) {
     );
   }
 }
-export async function POST(request: NextRequest) {
+
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ address_id: string }> }) {
   try {
+    const { address_id } = await params;
     const token = await getAuthTokenServer()
+
 
     if (!token) {
 
@@ -48,12 +51,13 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
     }
-    const url = `${API_BACKEND_URL}/addresses`;
+
+    const url = `${API_BACKEND_URL}/addresses/${address_id}`;
 
     const groupPayload = await request.json();
 
     const response = await fetch(url, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -69,5 +73,5 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
 
+}
