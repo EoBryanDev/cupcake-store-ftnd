@@ -5,9 +5,11 @@ import { finishOrderAction } from './actions/finishOrderAction';
 const useCheckoutStore = create<ICheckoutStore>((set) => ({
   step: 0,
   userInfo: null,
+  payment: null,
   nextStep: () => set((state) => ({ step: (state.step || 0) + 1 })),
   prevStep: () => set((state) => ({ step: (state.step || 1) - 1 })),
   addUserAdd: (address_id) => set({ userInfo: { address_id } }),
+  addPayment: (payment) => set({ payment }),
   finishOrder: () => finishOrderAction(),
 
 }))

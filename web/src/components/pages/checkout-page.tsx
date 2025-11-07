@@ -5,6 +5,7 @@ import useCartStore from "@/src/store/cart-store/useCartStore";
 import { notFound } from "next/navigation";
 import CartSummary from "../carts/cart-summary";
 import Addresses from "../adresses/address";
+import { PaymentMethod } from "../payments/payment-method";
 
 const CheckoutPage = () => {
   const { step } = useCheckoutStore();
@@ -34,9 +35,17 @@ const CheckoutPage = () => {
         </nav>
       </header>
       <section className="flex flex-col gap-8 md:flex-row md:justify-between">
-        <aside className="w-full rounded-lg p-4 md:w-2/3">
-          {step === 0 && <Addresses />}
-        </aside>
+        {step === 0 && (
+          <aside className="w-full rounded-lg p-4 md:w-2/3">
+            <Addresses />
+          </aside>
+        )}
+
+        {step === 1 && (
+          <aside className="w-full rounded-lg p-4 md:w-2/3">
+            <PaymentMethod />
+          </aside>
+        )}
 
         <aside className="w-full rounded-lg p-4 md:w-1/3">
           <CartSummary />

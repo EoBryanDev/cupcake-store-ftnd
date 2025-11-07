@@ -30,7 +30,7 @@ import { useDeleteAddressMutation } from "@/src/hooks/mutations/useDeleteAddress
 const Addresses = () => {
   const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const { nextStep } = useCheckoutStore();
+  const { nextStep, addUserAdd } = useCheckoutStore();
 
   const createAddressMutation = useCreateAddressMutation();
   const deleteAddressMutation = useDeleteAddressMutation();
@@ -265,7 +265,13 @@ const Addresses = () => {
 
         {selectedAddress && selectedAddress !== "add_new" && !isEditing && (
           <div className="mt-4">
-            <Button onClick={nextStep} className="w-full">
+            <Button
+              onClick={() => {
+                addUserAdd(selectedAddress);
+                nextStep();
+              }}
+              className="w-full"
+            >
               Payment Method
             </Button>
           </div>
