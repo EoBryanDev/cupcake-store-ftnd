@@ -1,4 +1,5 @@
 import { ICartItem } from "./ICart";
+import { IPagination } from "./IProductVariant";
 
 interface IOrderItems extends ICartItem {
   orderItemId?: string;
@@ -32,6 +33,7 @@ interface IOrder {
 }
 interface IOrderResponse {
   data: IOrder[] | null;
+  pagination: IPagination;
   error: string;
 };
 

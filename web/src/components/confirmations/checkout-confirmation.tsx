@@ -11,8 +11,15 @@ import { IOrder } from "@/src/interface/IOrder";
 import useCartStore from "@/src/store/cart-store/useCartStore";
 
 const CheckoutConfirmation = () => {
-  const { userInfo, payment, prevStep, finishOrder, nextStep } =
-    useCheckoutStore();
+  const {
+    userInfo,
+    payment,
+    prevStep,
+    finishOrder,
+    nextStep,
+    setOrderId,
+    setDoneSuccessfully,
+  } = useCheckoutStore();
   const { data: addresses, isLoading } = useUserAddressQuery();
   const { cart } = useCartStore();
   const createOrderMutation = useCreateOrderMutation();
@@ -45,9 +52,13 @@ const CheckoutConfirmation = () => {
 
       const order = await createOrderMutation.mutateAsync(payload);
 
+      setOrderId(order.data.orderId);
+      setDoneSuccessfully(true);
+
       nextStep();
       finishOrder();
     } catch (error) {
+      setDoneSuccessfully(false);
       console.error("Error finishing order:", error);
       toast.error("Order could be not created");
     }

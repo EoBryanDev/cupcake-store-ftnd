@@ -7,9 +7,11 @@ import CartSummary from "../carts/cart-summary";
 import Addresses from "../adresses/address";
 import { PaymentMethod } from "../payments/payment-method";
 import { CheckoutConfirmation } from "../confirmations/checkout-confirmation";
+import { OrderSuccess } from "../orders/order-success";
+import { OrderError } from "../orders/order-error";
 
 const CheckoutPage = () => {
-  const { step } = useCheckoutStore();
+  const { step, doneSuccessfully } = useCheckoutStore();
   const { cart } = useCartStore();
 
   const generateSteps = (count: number): Step[] => {
@@ -37,25 +39,39 @@ const CheckoutPage = () => {
       </header>
       <section className="flex flex-col gap-8 md:flex-row md:justify-between">
         {step === 0 && (
-          <aside className="w-full rounded-lg p-4 md:w-2/3">
+          <main className="w-full rounded-lg p-4 md:w-2/3">
             <Addresses />
-          </aside>
+          </main>
         )}
 
         {step === 1 && (
-          <aside className="w-full rounded-lg p-4 md:w-2/3">
+          <main className="w-full rounded-lg p-4 md:w-2/3">
             <PaymentMethod />
-          </aside>
+          </main>
         )}
 
         {step === 2 && (
-          <aside className="w-full rounded-lg p-4 md:w-2/3">
+          <main className="w-full rounded-lg p-4 md:w-2/3">
             <CheckoutConfirmation />
+          </main>
+        )}
+
+        {step && step < 3 && (
+          <aside className="w-full rounded-lg p-4 md:w-1/3">
+            <CartSummary />
           </aside>
         )}
-        <aside className="w-full rounded-lg p-4 md:w-1/3">
-          <CartSummary />
-        </aside>
+
+        {(step === 3 && doneSuccessfully && (
+          <main className="w-full rounded-lg p-4 md:w-1/3">
+            <OrderSuccess />
+          </main>
+        )) ||
+          (step === 3 && !doneSuccessfully && (
+            <main className="w-full rounded-lg p-4 md:w-1/3">
+              <OrderError />
+            </main>
+          ))}
       </section>
     </main>
   );
