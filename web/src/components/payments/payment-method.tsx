@@ -7,11 +7,10 @@ import { Button } from "../ui/button";
 import useCheckoutStore from "@/src/store/checkout-store/useCheckoutStore";
 
 const PaymentMethod = () => {
+  const { nextStep, addPayment, prevStep, payment } = useCheckoutStore();
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
     string | null
-  >(null);
-
-  const { nextStep, addPayment, prevStep } = useCheckoutStore();
+  >(payment?.paymentMethod || null);
 
   return (
     <Card>
@@ -26,12 +25,12 @@ const PaymentMethod = () => {
           className="flex"
         >
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="bank_slip" id="bank_slip" />
-            <Label htmlFor="bank_slip">Bank Slip</Label>
+            <RadioGroupItem value="BANK_SLIP" id="BANK_SLIP" />
+            <Label htmlFor="BANK_SLIP">Bank Slip</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="credit_card" id="credit_card" disabled />
-            <Label htmlFor="credit_card">Credit Card</Label>
+            <RadioGroupItem value="CREDIT_CARD" id="CREDIT_CARD" disabled />
+            <Label htmlFor="CREDIT_CARD">Credit Card</Label>
           </div>
         </RadioGroup>
 

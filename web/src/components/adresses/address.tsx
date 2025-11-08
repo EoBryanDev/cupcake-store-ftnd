@@ -28,9 +28,11 @@ import { RotateCcwIcon, TrashIcon, EditIcon } from "lucide-react";
 import { useDeleteAddressMutation } from "@/src/hooks/mutations/useDeleteAddress";
 
 const Addresses = () => {
-  const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
+  const { nextStep, addUserAdd, userInfo } = useCheckoutStore();
+  const [selectedAddress, setSelectedAddress] = useState<string | null>(
+    userInfo?.address_id || null,
+  );
   const [isEditing, setIsEditing] = useState(false);
-  const { nextStep, addUserAdd } = useCheckoutStore();
 
   const createAddressMutation = useCreateAddressMutation();
   const deleteAddressMutation = useDeleteAddressMutation();

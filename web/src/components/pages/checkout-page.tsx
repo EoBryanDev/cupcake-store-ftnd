@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import CartSummary from "../carts/cart-summary";
 import Addresses from "../adresses/address";
 import { PaymentMethod } from "../payments/payment-method";
+import { CheckoutConfirmation } from "../confirmations/checkout-confirmation";
 
 const CheckoutPage = () => {
   const { step } = useCheckoutStore();
@@ -22,7 +23,7 @@ const CheckoutPage = () => {
   };
   const steps = generateSteps(4);
 
-  if (!cart?.items) {
+  if (!cart?.items && step !== 3) {
     notFound();
   }
 
@@ -47,6 +48,11 @@ const CheckoutPage = () => {
           </aside>
         )}
 
+        {step === 2 && (
+          <aside className="w-full rounded-lg p-4 md:w-2/3">
+            <CheckoutConfirmation />
+          </aside>
+        )}
         <aside className="w-full rounded-lg p-4 md:w-1/3">
           <CartSummary />
         </aside>
