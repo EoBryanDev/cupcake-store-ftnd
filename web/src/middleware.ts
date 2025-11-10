@@ -1,13 +1,15 @@
 import { type NextRequest, type MiddlewareConfig, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
-
 const TOKEN_KEY = process.env.TOKEN_KEY || 'token';
+const TOKEN_KEY_ADMIN = process.env.TOKEN_KEY_ADMIN || 'token-admin';
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
+const JWT_SECRET_ADMIN = new TextEncoder().encode(process.env.JWT_SECRET_ADMIN || process.env.JWT_SECRET);
 
 const publicRoutes: { path: string | RegExp; whenAuthenticated: 'redirect' | 'next' }[] = [
   { path: '/', whenAuthenticated: 'next' },
   { path: '/login', whenAuthenticated: 'redirect' },
+  { path: '/admin/login', whenAuthenticated: 'redirect' },
   // Rotas sempre públicas (autenticado ou não)
   { path: /^\/products\/[^/]+\/variants\/[^/]+$/, whenAuthenticated: 'next' },
   { path: /^\/search/, whenAuthenticated: 'next' },
@@ -16,11 +18,18 @@ const publicRoutes: { path: string | RegExp; whenAuthenticated: 'redirect' | 'ne
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/login';
 const REDIRECT_WHEN_AUTHENTICATED_ROUTE = '/';
 
+const ADMIN_REDIRECT_WHEN_NOT_AUTHENTICATED = '/admin/login';
+const ADMIN_REDIRECT_WHEN_AUTHENTICATED = '/admin/dashboard';
+
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  const authToken = request.cookies.get(TOKEN_KEY);
 
-  // Verifica se é uma rota pública
+  const isAdminRoute = path.startsWith('/admin');
+
+  const tokenKey = isAdminRoute ? TOKEN_KEY_ADMIN : TOKEN_KEY;
+  const jwtSecret = isAdminRoute ? JWT_SECRET_ADMIN : JWT_SECRET;
+  const authToken = request.cookies.get(tokenKey);
+
   const publicRoute = publicRoutes.find(route => {
     if (typeof route.path === 'string') {
       return route.path === path;
@@ -32,60 +41,51 @@ export async function middleware(request: NextRequest) {
   let isValidToken = false;
   let tokenExpired = false;
 
-  // Valida o token se existir
   if (authToken) {
     try {
-
-      await jwtVerify(authToken.value, JWT_SECRET);
+      await jwtVerify(authToken.value, jwtSecret);
       isValidToken = true;
     } catch (error: any) {
-
-
       if (error.code === 'ERR_JWT_EXPIRED' || error.message?.includes('expired')) {
         tokenExpired = true;
-
       }
     }
   }
 
-  // Se for rota pública
   if (publicRoute) {
-    // PRIMEIRO: Se estiver autenticado e a rota exigir redirect quando autenticado
     if (isValidToken && publicRoute.whenAuthenticated === 'redirect') {
       const redirectUrl = request.nextUrl.clone();
-      redirectUrl.pathname = REDIRECT_WHEN_AUTHENTICATED_ROUTE;
+      redirectUrl.pathname = isAdminRoute
+        ? ADMIN_REDIRECT_WHEN_AUTHENTICATED
+        : REDIRECT_WHEN_AUTHENTICATED_ROUTE;
       return NextResponse.redirect(redirectUrl);
     }
 
-    // SEGUNDO: Remove token expirado mas permite acesso à rota pública
-    // (só executa se não retornou no bloco acima)
     if (tokenExpired) {
       const response = NextResponse.next();
-      response.cookies.delete(TOKEN_KEY);
-
+      response.cookies.delete(tokenKey);
       return response;
     }
 
-    // TERCEIRO: Permite acesso à rota pública
+    // Permite acesso à rota pública
     return NextResponse.next();
   }
 
-  // Se não for rota pública e não estiver autenticado, redireciona
   if (!isValidToken || tokenExpired) {
     const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
+    redirectUrl.pathname = isAdminRoute
+      ? ADMIN_REDIRECT_WHEN_NOT_AUTHENTICATED
+      : REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
 
     const response = NextResponse.redirect(redirectUrl);
 
     if (authToken) {
       response.cookies.delete(TOKEN_KEY);
-
     }
 
     return response;
   }
 
-  // Usuário autenticado acessando rota protegida
   return NextResponse.next();
 }
 
