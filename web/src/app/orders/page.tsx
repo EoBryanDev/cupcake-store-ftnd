@@ -4,11 +4,13 @@ import { OrderListPage } from "@/src/components/pages/order-list-page";
 
 const OrdersPage = async () => {
   return (
-    <>
+    <main className="flex h-screen flex-col">
       <NavMenu />
-      <OrderListPage />
+      <section>
+        <OrderListPage />
+      </section>
       <MainFooter />
-    </>
+    </main>
   );
 };
 export default OrdersPage;
