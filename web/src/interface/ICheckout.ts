@@ -24,6 +24,7 @@ interface ICheckoutStore extends ICheckout {
   prevStep: () => void;
   setOrderId: (order_id: string) => void;
   setDoneSuccessfully: (doneSuccessfully: boolean) => void;
+  reset: () => void;
   finishOrder: () => void;
 }
 

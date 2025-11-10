@@ -14,6 +14,13 @@ const useCheckoutStore = create<ICheckoutStore>((set) => ({
   addPayment: (payment) => set({ payment }),
   setOrderId: (order_id) => set({ order_id }),
   setDoneSuccessfully: (doneSuccessfully) => set({ doneSuccessfully }),
+  reset: () => set({
+    step: 0,
+    userInfo: null,
+    payment: null,
+    doneSuccessfully: false,
+    order_id: null,
+  }),
   finishOrder: () => finishOrderAction(),
 
 }))

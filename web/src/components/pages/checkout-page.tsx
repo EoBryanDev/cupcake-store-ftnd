@@ -9,9 +9,10 @@ import { PaymentMethod } from "../payments/payment-method";
 import { CheckoutConfirmation } from "../confirmations/checkout-confirmation";
 import { OrderSuccess } from "../orders/order-success";
 import { OrderError } from "../orders/order-error";
+import { useEffect } from "react";
 
 const CheckoutPage = () => {
-  const { step, doneSuccessfully } = useCheckoutStore();
+  const { step, doneSuccessfully, reset } = useCheckoutStore();
   const { cart } = useCartStore();
 
   const generateSteps = (count: number): Step[] => {
@@ -28,6 +29,10 @@ const CheckoutPage = () => {
   if (!cart?.items && step !== 3) {
     notFound();
   }
+
+  useEffect(() => {
+    reset();
+  }, []);
 
   return (
     <main className="flex flex-col">
@@ -56,19 +61,19 @@ const CheckoutPage = () => {
           </main>
         )}
 
-        {step && step < 3 && (
+        {step !== null && step < 3 && (
           <aside className="w-full rounded-lg p-4 md:w-1/3">
             <CartSummary />
           </aside>
         )}
 
         {(step === 3 && doneSuccessfully && (
-          <main className="w-full rounded-lg p-4 md:w-1/3">
+          <main className="w-full rounded-lg p-4">
             <OrderSuccess />
           </main>
         )) ||
           (step === 3 && !doneSuccessfully && (
-            <main className="w-full rounded-lg p-4 md:w-1/3">
+            <main className="w-full rounded-lg p-4">
               <OrderError />
             </main>
           ))}

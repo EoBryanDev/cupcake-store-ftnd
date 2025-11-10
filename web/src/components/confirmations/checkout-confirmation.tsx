@@ -25,6 +25,8 @@ const CheckoutConfirmation = () => {
   const createOrderMutation = useCreateOrderMutation();
 
   const handleFinishOrder = async () => {
+    let success = false;
+    let mainOrder;
     try {
       const selectedAddress = addresses?.data?.find(
         (address) => address.shippingAddrId === userInfo?.address_id,
@@ -52,15 +54,23 @@ const CheckoutConfirmation = () => {
 
       const order = await createOrderMutation.mutateAsync(payload);
 
-      setOrderId(order.data.orderId);
+      success = true;
+      mainOrder = order;
+    } catch (error) {
+      success = false;
+      console.error("Error finishing order:", error);
+    }
+
+    if (success) {
+      setOrderId(mainOrder.data.orderId);
       setDoneSuccessfully(true);
 
       nextStep();
       finishOrder();
-    } catch (error) {
+      toast.success("Order created successfully");
+    } else {
       setDoneSuccessfully(false);
-      console.error("Error finishing order:", error);
-      toast.error("Order could be not created");
+      toast.error("Order could not be created");
     }
   };
 
