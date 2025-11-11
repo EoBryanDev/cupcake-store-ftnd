@@ -2,7 +2,7 @@ import { type NextRequest, type MiddlewareConfig, NextResponse } from 'next/serv
 import { jwtVerify } from 'jose';
 
 const TOKEN_KEY = process.env.TOKEN_KEY || 'token';
-const TOKEN_KEY_ADMIN = process.env.TOKEN_KEY_ADMIN || 'token-admin';
+const TOKEN_KEY_ADMIN = process.env.TOKEN_ADMIN_KEY || 'token-admin';
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 const JWT_SECRET_ADMIN = new TextEncoder().encode(process.env.JWT_SECRET_ADMIN || process.env.JWT_SECRET);
 
