@@ -7,10 +7,18 @@ import { IUserInfo } from "@/src/interface/ILogin";
 import Link from "next/link";
 import { Button } from "../../ui/button";
 import { LogOutIcon } from "lucide-react";
+import { useCookie } from "@/src/helpers/get-cookie";
+import { useEffect } from "react";
 
 export function LoginAdminMenu() {
+  const cookie = useCookie("ck-store-key-admin");
   const userSession = useSession("user-admin");
-  const userInfo = userSession.get<IUserInfo>();
+  // useEffect(() => {
+  //   if (!cookie) {
+  //     userSession.remove();
+  //   }
+  // }, []);
+
   return (
     <header className="bg-card border-b">
       <div className="flex items-baseline justify-between px-4 py-4 sm:px-6">
@@ -25,7 +33,7 @@ export function LoginAdminMenu() {
         <div className="flex w-2/3 items-center justify-end space-x-2 sm:space-x-4">
           <div className="flex items-center gap-1">
             <ThemeToggle />
-            {userInfo && (
+            {cookie && (
               <Button variant="ghost" className="cursor-pointer">
                 <LogOutIcon size={"1.2rem"} />
               </Button>

@@ -4,7 +4,7 @@ import { OrderListPage } from "@/src/components/pages/order-list-page";
 
 const OrdersPage = async () => {
   return (
-    <main className="flex h-screen flex-col">
+    <main className="flex h-screen flex-col justify-between">
       <NavMenu />
       <section>
         <OrderListPage />
