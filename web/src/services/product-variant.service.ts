@@ -32,7 +32,7 @@ const getProductVariantPreview = async (paginationPreview: IProductPreviewPagina
     return data;
 }
 
-const getProductVariant = async (params: IPaginationDefault, filters: IFilters): Promise<IProductResponse> => {
+const getProductVariant = async (params: IPaginationDefault, filters?: IFilters): Promise<IProductResponse> => {
     const query = new URLSearchParams();
 
 
@@ -43,11 +43,11 @@ const getProductVariant = async (params: IPaginationDefault, filters: IFilters):
     if (params.currentPage) query.set("currentPage", String(params.currentPage));
     if (params.searchType) query.set("searchType", params.searchType);
 
-    filters.colors.forEach(color => query.append('colors', color));
-    filters.sizes.forEach(size => query.append('sizes', size));
+    filters?.colors.forEach(color => query.append('colors', color));
+    filters?.sizes.forEach(size => query.append('sizes', size));
 
-    if (filters.price[0] > 0) query.set('minPrice', String(filters.price[0]));
-    if (filters.price[1]) query.set('maxPrice', String(filters.price[1]));
+    if (filters && filters.price[0] > 0) query.set('minPrice', String(filters?.price[0]));
+    if (filters && filters.price[1]) query.set('maxPrice', String(filters?.price[1]));
 
     const response = await fetch(`${API_INTERNAL_URL}/products/variants?${query.toString()}`, {
         method: 'GET',

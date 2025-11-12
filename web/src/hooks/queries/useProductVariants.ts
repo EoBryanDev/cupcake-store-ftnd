@@ -4,9 +4,9 @@ import { IProductResponse } from "@/src/interface/IProductVariant";
 import { getProductVariant } from "@/src/services/product-variant.service";
 import { useQuery } from "@tanstack/react-query";
 
-const getProductVariantQueryKey = (params: IPaginationDefault, filters: IFilters) => [`product-variants`, params, filters] as const;
+const getProductVariantQueryKey = (params: IPaginationDefault, filters?: IFilters) => [`product-variants`, params, filters] as const;
 
-const useProductVariantQuery = (paginationParams: IPaginationDefault, filters: IFilters) => {
+const useProductVariantQuery = (paginationParams: IPaginationDefault, filters?: IFilters) => {
   return useQuery<IProductResponse | null, Error>({
     queryKey: getProductVariantQueryKey(paginationParams, filters),
     queryFn: async () => {
