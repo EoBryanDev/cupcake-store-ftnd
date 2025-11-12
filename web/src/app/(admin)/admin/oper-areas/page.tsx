@@ -6,11 +6,9 @@ import { Subtitle } from "@/src/components/sections/titles/subtitle";
 const OperAreas = () => {
   return (
     <div className="flex h-full flex-col">
-      <div>
-        <Section>
-          <HighLightTitle>Operational Areas</HighLightTitle>
-          <Subtitle>Add new operational areas and shipping companies</Subtitle>
-        </Section>
+      <div className="p-2">
+        <HighLightTitle>Operational Areas</HighLightTitle>
+        <Subtitle>Add new operational areas and shipping companies</Subtitle>
       </div>
 
       <div className="flex flex-1 items-center justify-center">

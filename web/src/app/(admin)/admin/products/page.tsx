@@ -6,11 +6,9 @@ import { Subtitle } from "@/src/components/sections/titles/subtitle";
 const AdmProducts = () => {
   return (
     <div className="flex h-full flex-col">
-      <div>
-        <Section>
-          <HighLightTitle>Products</HighLightTitle>
-          <Subtitle>Add new product and product variants</Subtitle>
-        </Section>
+      <div className="p-2">
+        <HighLightTitle>Products</HighLightTitle>
+        <Subtitle>Manage your products</Subtitle>
       </div>
 
       <div className="flex flex-1 items-center justify-center">
