@@ -4,7 +4,6 @@ import { IPaginationDefault } from "../interface/IPaginationDefault";
 const API_INTERNAL_URL = process.env.NEXT_PUBLIC_API_URL;
 
 async function createOrder(orderPayload: IOrder) {
-  console.log('here');
 
   const response = await fetch(`${API_INTERNAL_URL}/orders`, {
     method: 'POST',
