@@ -6,7 +6,7 @@ const API_INTERNAL_URL = process.env.NEXT_PUBLIC_API_URL;
 
 async function createProduct(productPayload: TNewProductSchema): Promise<IProductResponse> {
 
-  const response = await fetch(`${API_INTERNAL_URL}/admin/product`, {
+  const response = await fetch(`${API_INTERNAL_URL}/admin/products`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ async function createProduct(productPayload: TNewProductSchema): Promise<IProduc
 
 async function updateProduct(productPayload: TUpdateProductSchema): Promise<IProductResponse> {
   const product_id = productPayload.productId
-  const response = await fetch(`${API_INTERNAL_URL}/admin/product/${product_id}`, {
+  const response = await fetch(`${API_INTERNAL_URL}/admin/products/${product_id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

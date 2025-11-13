@@ -41,15 +41,28 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useUpdateProductMutation } from "@/src/hooks/mutations/(admin)/useUpdateProductMutation";
+import { useProductVariantQuery } from "@/src/hooks/queries/useProductVariants";
+import { IPaginationDefault } from "@/src/interface/IPaginationDefault";
+import { paginationDefault } from "@/src/helpers/pagination-default";
+import { useSearchParams } from "next/navigation";
 
 interface IUpdateProductDialogProps {
   productId: string;
 }
 
 const UpdateProductDialog = ({ productId }: IUpdateProductDialogProps) => {
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page") ?? "1";
+  const [pagination] = useState<IPaginationDefault>(paginationDefault());
+  const { data: productData } = useProductVariantQuery(pagination);
+
+  const editingProduct = productData?.data.find(
+    (product) => product.productId === productId,
+  );
+
   const [open, setOpen] = useState(false);
   const updateProductForm = useForm<TUpdateProductSchema>({
     resolver: zodResolver(updateProductSchema),
@@ -63,10 +76,27 @@ const UpdateProductDialog = ({ productId }: IUpdateProductDialogProps) => {
     },
   });
 
+  // Atualiza o form quando os dados chegarem ou quando o dialog abrir
+  useEffect(() => {
+    if (editingProduct && open) {
+      updateProductForm.reset({
+        categoryId: editingProduct.categoryId,
+        name: editingProduct.name,
+        slug: editingProduct.slug,
+        description: editingProduct.description ?? "",
+        unit: editingProduct.unit ?? "",
+        active: editingProduct.active,
+      });
+    }
+  }, [editingProduct, open, updateProductForm]);
+
   const updateProductMutation = useUpdateProductMutation();
   const onSubmit = async (values: TUpdateProductSchema) => {
     try {
-      const resp = await updateProductMutation.mutateAsync(values);
+      const resp = await updateProductMutation.mutateAsync({
+        ...values,
+        productId: productId,
+      });
 
       setOpen(false);
       updateProductForm.reset();
