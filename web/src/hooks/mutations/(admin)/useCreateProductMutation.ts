@@ -1,6 +1,4 @@
-import { createUserAddress, login } from "@/src/services/user.service";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { IAddressSchema } from "@/src/components/adresses/schemas";
 import { getProductVariantQueryKey } from "../../queries/useProductVariants";
 import { useSearchParams } from "next/navigation";
 import { paginationDefault } from "@/src/helpers/pagination-default";

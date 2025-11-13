@@ -1,3 +1,5 @@
+import { ICategory } from "./ICategory";
+
 // Tipo para a variante do produto
 interface IProductVariant {
   productVariantId: string;
@@ -19,14 +21,6 @@ interface IProductVariant {
 };
 
 // Tipo para a categoria
-interface ICategory {
-  categoryId: string;
-  name: string;
-  description: string;
-  slug: string;
-  createdAt: string;
-  createdBy: string | null;
-};
 
 // Tipo para o produto
 interface IProduct {
@@ -74,7 +68,6 @@ interface IProductVariantBySlugCategoryResponse {
 
 export type {
   IProductVariant,
-  ICategory,
   IProduct,
   IPagination,
   IProductResponse,
