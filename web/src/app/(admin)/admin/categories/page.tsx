@@ -2,6 +2,7 @@ import { CreateCategoryDialog } from "@/src/components/dialogs/create-category-d
 import { HighLightTitle } from "@/src/components/sections/titles/highlight-title";
 import { Subtitle } from "@/src/components/sections/titles/subtitle";
 import { CategoryTable } from "@/src/components/tables/category-admin-table";
+import { Suspense } from "react";
 
 const Categories = () => {
   return (
@@ -13,12 +14,28 @@ const Categories = () => {
         </div>
 
         <div className="pr-4">
-          <CreateCategoryDialog />
+          <Suspense
+            fallback={
+              <div className="flex items-center justify-center p-8">
+                Loading...
+              </div>
+            }
+          >
+            <CreateCategoryDialog />
+          </Suspense>
         </div>
       </div>
 
       <div className="mt-4 flex-1 px-2 pr-6">
-        <CategoryTable />
+        <Suspense
+          fallback={
+            <div className="flex items-center justify-center p-8">
+              Loading category data...
+            </div>
+          }
+        >
+          <CategoryTable />
+        </Suspense>
       </div>
     </div>
   );

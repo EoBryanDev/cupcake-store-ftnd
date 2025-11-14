@@ -3,6 +3,7 @@ import { Section } from "@/src/components/sections/section";
 import { HighLightTitle } from "@/src/components/sections/titles/highlight-title";
 import { Subtitle } from "@/src/components/sections/titles/subtitle";
 import { OrderTable } from "@/src/components/tables/order-admin-table";
+import { Suspense } from "react";
 
 const OrderManagement = () => {
   return (
@@ -13,7 +14,15 @@ const OrderManagement = () => {
       </div>
 
       <div className="mt-4 flex-1 px-2 pr-6">
-        <OrderTable />
+        <Suspense
+          fallback={
+            <div className="flex items-center justify-center p-8">
+              Loading orders...
+            </div>
+          }
+        >
+          <OrderTable />
+        </Suspense>
       </div>
     </div>
   );

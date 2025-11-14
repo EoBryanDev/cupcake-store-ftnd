@@ -1,5 +1,4 @@
 import { ConstructionPage } from "@/src/components/pages/construction";
-import { Section } from "@/src/components/sections/section";
 import { HighLightTitle } from "@/src/components/sections/titles/highlight-title";
 import { Subtitle } from "@/src/components/sections/titles/subtitle";
 
