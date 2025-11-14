@@ -35,6 +35,7 @@ import { Textarea } from "../ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useCreateProductMutation } from "@/src/hooks/mutations/(admin)/useCreateProductMutation";
+import { useCategoryQuery } from "@/src/hooks/queries/(admin)/useCategoryQuery";
 
 const CreateProductDialog = () => {
   const [open, setOpen] = useState(false);
@@ -49,15 +50,26 @@ const CreateProductDialog = () => {
       active: true,
     },
   });
+  const { data: categoryData, isLoading: isCategoryLoading } = useCategoryQuery(
+    {
+      offset: 1,
+      limit: 60,
+      order: "asc",
+      orderBy: "name",
+      currentPage: 1,
+      searchType: "default",
+    },
+  );
 
   const createProductMutation = useCreateProductMutation();
   const onSubmit = async (values: TNewProductSchema) => {
     try {
       const resp = await createProductMutation.mutateAsync(values);
+      console.log(resp);
 
       setOpen(false);
       newProductForm.reset();
-      toast.success(`Product '${resp.data[0].name}'created successfully`);
+      toast.success(`Product '${resp.data[0].name}' created successfully`);
     } catch (error) {
       console.log(error);
       toast.error("Error creating product");
@@ -93,22 +105,30 @@ const CreateProductDialog = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Category</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          value={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select a category" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="tecnologia">
-                              Tecnologia
-                            </SelectItem>
-                            <SelectItem value="design">Design</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        {isCategoryLoading && <div>Loading...</div>}
+                        {(categoryData && (
+                          <Select
+                            onValueChange={field.onChange}
+                            value={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select a category" />
+                              </SelectTrigger>
+                            </FormControl>
+
+                            <SelectContent>
+                              {categoryData?.data?.map((item) => (
+                                <SelectItem
+                                  key={item.categoryId}
+                                  value={item.categoryId}
+                                >
+                                  {item.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        )) || <div>No categories found</div>}
                         <FormMessage />
                       </FormItem>
                     )}

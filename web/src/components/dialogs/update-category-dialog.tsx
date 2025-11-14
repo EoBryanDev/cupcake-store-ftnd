@@ -88,7 +88,7 @@ const UpdateCategoryDialog = ({ categoryId }: IUpdateCategoryDialogProps) => {
 
       setOpen(false);
       updateCategoryForm.reset();
-      toast.success(`Category '${resp.data[0].name}'edited successfully`);
+      toast.success(`Category '${resp.data[0].name}' edited successfully`);
     } catch (error) {
       console.log(error);
       toast.error("Error editing category");

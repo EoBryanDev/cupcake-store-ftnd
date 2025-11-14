@@ -48,7 +48,7 @@ const CreateCategoryDialog = () => {
 
       setOpen(false);
       newCategoryForm.reset();
-      toast.success(`Category '${resp.data[0].name}'created successfully`);
+      toast.success(`Category '${resp.data[0].name}' created successfully`);
     } catch (error) {
       console.log(error);
       toast.error("Error creating category");

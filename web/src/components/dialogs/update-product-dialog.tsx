@@ -48,6 +48,7 @@ import { useProductVariantQuery } from "@/src/hooks/queries/useProductVariants";
 import { IPaginationDefault } from "@/src/interface/IPaginationDefault";
 import { paginationDefault } from "@/src/helpers/pagination-default";
 import { useSearchParams } from "next/navigation";
+import { useCategoryQuery } from "@/src/hooks/queries/(admin)/useCategoryQuery";
 
 interface IUpdateProductDialogProps {
   productId: string;
@@ -61,6 +62,17 @@ const UpdateProductDialog = ({ productId }: IUpdateProductDialogProps) => {
 
   const editingProduct = productData?.data.find(
     (product) => product.productId === productId,
+  );
+
+  const { data: categoryData, isLoading: isCategoryLoading } = useCategoryQuery(
+    {
+      offset: 1,
+      limit: 60,
+      order: "desc",
+      orderBy: "name",
+      currentPage: 1,
+      searchType: "default",
+    },
   );
 
   const [open, setOpen] = useState(false);
@@ -100,7 +112,7 @@ const UpdateProductDialog = ({ productId }: IUpdateProductDialogProps) => {
 
       setOpen(false);
       updateProductForm.reset();
-      toast.success(`Product '${resp.data[0].name}'edited successfully`);
+      toast.success(`Product '${resp.data[0].name}' edited successfully`);
     } catch (error) {
       console.log(error);
       toast.error("Error editing product");
@@ -143,22 +155,30 @@ const UpdateProductDialog = ({ productId }: IUpdateProductDialogProps) => {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Category</FormLabel>
-                            <Select
-                              onValueChange={field.onChange}
-                              value={field.value}
-                            >
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select a category" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="tecnologia">
-                                  Tecnologia
-                                </SelectItem>
-                                <SelectItem value="design">Design</SelectItem>
-                              </SelectContent>
-                            </Select>
+                            {isCategoryLoading && <div>Loading...</div>}
+                            {(categoryData && (
+                              <Select
+                                onValueChange={field.onChange}
+                                value={field.value}
+                              >
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select a category" />
+                                  </SelectTrigger>
+                                </FormControl>
+
+                                <SelectContent>
+                                  {categoryData?.data?.map((item) => (
+                                    <SelectItem
+                                      key={item.categoryId}
+                                      value={item.categoryId}
+                                    >
+                                      {item.name}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            )) || <div>No categories found</div>}
                             <FormMessage />
                           </FormItem>
                         )}
