@@ -51,8 +51,8 @@ const UpdateCategoryDialog = ({ categoryId }: IUpdateCategoryDialogProps) => {
   const [pagination] = useState<IPaginationDefault>(paginationDefault());
   const { data: categoryData } = useCategoryQuery(pagination);
 
-  const editingCategory = categoryData?.data.find(
-    (product) => product.categoryId === categoryId,
+  const editingCategory = categoryData?.data?.find(
+    (category) => category.categoryId === categoryId,
   );
 
   const [open, setOpen] = useState(false);

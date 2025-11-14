@@ -1,4 +1,4 @@
-import { getAuthTokenServer } from "@/src/helpers/auth-server";
+
 import { ICategoryResponse } from "@/src/interface/ICategory";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,15 +8,7 @@ const API_BACKEND_URL = process.env.NEXT_ENVIROMENT === 'DEV' ?
 
 export async function GET(request: NextRequest) {
   try {
-    const token = await getAuthTokenServer()
 
-    if (!token) {
-
-      return NextResponse.json(
-        { message: 'Auth token was not found!' },
-        { status: 401 }
-      );
-    }
     const searchParams = request.nextUrl.searchParams;
     const searchType = searchParams.get('searchType');
 
@@ -41,7 +33,6 @@ export async function GET(request: NextRequest) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
       },
     });
 

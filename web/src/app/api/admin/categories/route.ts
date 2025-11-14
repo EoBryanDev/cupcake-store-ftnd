@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
 
     const categoryPayload = await request.json();
 
+
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -31,7 +32,6 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({ ...categoryPayload })
     });
-
     const data: ICategoryResponse = await response.json();
     return NextResponse.json(data, { status: response.status });
   } catch (error) {

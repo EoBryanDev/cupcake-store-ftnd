@@ -6,8 +6,8 @@ import { IPaginationDefault } from "@/src/interface/IPaginationDefault";
 import { useEffect, useState } from "react";
 import { MainContainer } from "../containers/main-container";
 import { ProductGridPagination } from "../paginations/product-grid-pagination";
-import { useProductVariantQuery } from "@/src/hooks/queries/useProductVariants";
 import { UpdateCategoryDialog } from "../dialogs/update-category-dialog";
+import { useCategoryQuery } from "@/src/hooks/queries/(admin)/useCategoryQuery";
 
 const CategoryTable = () => {
   const searchParams = useSearchParams();
@@ -15,7 +15,7 @@ const CategoryTable = () => {
   const [pagination, setPagination] =
     useState<IPaginationDefault>(paginationDefault());
   const { data: categoryData, isLoading: isCategoryLoading } =
-    useProductVariantQuery(pagination);
+    useCategoryQuery(pagination);
 
   useEffect(() => {
     const currentPage = parseInt(page);
@@ -60,7 +60,7 @@ const CategoryTable = () => {
               </tr>
             )}
             {categoryData?.data?.map((item) => (
-              <tr key={item.productId} className="hover:bg-muted/50">
+              <tr key={item.categoryId} className="hover:bg-muted/50">
                 <td className="px-4 py-3 text-sm">{item.name}</td>
                 <td className="px-4 py-3 text-sm">{item.slug}</td>
                 <td className="px-4 py-3 text-sm">{item.description}</td>
