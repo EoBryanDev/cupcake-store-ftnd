@@ -127,7 +127,7 @@ const OrderTable = () => {
                 </td>
 
                 {/* Coluna de Status com Select */}
-                <td className="px-4 py-3 text-sm">
+                <td className="px-4 py-3 text-center align-middle text-sm">
                   {(item.approval === "APPROVED" && (
                     <Select
                       value={item.status}
@@ -136,7 +136,7 @@ const OrderTable = () => {
                       }
                       disabled={orderStatusMutation.isPending}
                     >
-                      <SelectTrigger className="h-8 w-[140px]">
+                      <SelectTrigger className="mx-auto h-8 w-[140px]">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -147,11 +147,7 @@ const OrderTable = () => {
                         ))}
                       </SelectContent>
                     </Select>
-                  )) || (
-                    <div className="flex items-center justify-center">
-                      {" - "}
-                    </div>
-                  )}
+                  )) || <div className="mx-auto">-</div>}
                 </td>
 
                 <td className="px-4 py-3 text-sm">

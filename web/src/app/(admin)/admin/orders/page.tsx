@@ -12,7 +12,7 @@ const OrderManagement = () => {
         <Subtitle>Manage your client's orders</Subtitle>
       </div>
 
-      <div className="flex flex-1 items-center justify-center">
+      <div className="mt-4 flex-1 px-2 pr-6">
         <OrderTable />
       </div>
     </div>
