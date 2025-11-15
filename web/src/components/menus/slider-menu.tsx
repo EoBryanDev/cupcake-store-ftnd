@@ -48,17 +48,17 @@ function SliderMenu() {
                   <div className="flex items-center gap-3">
                     <Avatar>
                       <AvatarFallback>
-                        {userInfo.firstName[0].toUpperCase()}
-                        {userInfo.lastName[0].toUpperCase()}
+                        {userInfo?.firstName[0]?.toUpperCase()}
+                        {userInfo?.lastName[0]?.toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
 
                     <div>
                       <h3 className="font-semibold">
-                        {userInfo.firstName} {userInfo.lastName}
+                        {userInfo?.firstName} {userInfo?.lastName}
                       </h3>
                       <span className="text-muted-foreground block text-xs">
-                        {userInfo.email}
+                        {userInfo?.email}
                       </span>
                     </div>
                   </div>
