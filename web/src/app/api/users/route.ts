@@ -28,11 +28,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const data = await response.json();
+    const backendResponse = await response.json();
 
     const {
       email,
-      password,
       firstName,
       lastName,
       phoneNumber,
@@ -41,12 +40,11 @@ export async function POST(request: NextRequest) {
       createdAt,
       token,
       expires_in,
-    } = data
+    } = backendResponse.data;
 
     const res = NextResponse.json({
       success: true, data: {
         email,
-        password,
         firstName,
         lastName,
         phoneNumber,
