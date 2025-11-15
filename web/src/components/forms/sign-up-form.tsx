@@ -26,6 +26,7 @@ import { signUpSchema, TSignUpSchema } from "@/src/schemas/sign-up-schema";
 import { Calendar } from "../ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useRegister } from "@/src/hooks/mutations/useRegister";
 import { cn } from "@/src/lib/utils";
@@ -34,6 +35,7 @@ import { cpfMask, phoneMask } from "@/src/helpers/masks";
 
 const SignUpForm = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const register = useRegister();
   const sign_up_form = useForm<TSignUpSchema>({
     resolver: zodResolver(signUpSchema),
@@ -51,10 +53,14 @@ const SignUpForm = () => {
 
   const onSubmit = async (values: TSignUpSchema) => {
     try {
-      await register.mutateAsync(values);
+      await register.mutateAsync(values, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["session"] });
+        },
+      });
       toast.success("Registered successfully! Wait to be redirected!");
 
-      sign_up_form.reset;
+      sign_up_form.reset();
     } catch (error: any) {
       toast.error(error.message || "There was not possible register!");
     }
