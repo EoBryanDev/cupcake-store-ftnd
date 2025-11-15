@@ -4,6 +4,28 @@ import { ICategory } from "./ICategory";
 interface IProductVariant {
   productVariantId: string;
   productId: string;
+  productName?: string;
+  name: string;
+  slug: string;
+  description: string;
+  color: string | null;
+  weight: string | null;
+  width: string | null;
+  height: string | null;
+  size: string | null;
+  priceInCents: number;
+  rawMaterial: string | null;
+  imageUrl: string | null;
+  active: boolean;
+  createdAt: string;
+  createdBy: string;
+};
+interface IProductVariantOnly {
+  productVariantId: string;
+  productId: string;
+  product: {
+    name: string;
+  }
   name: string;
   slug: string;
   description: string;
@@ -48,6 +70,11 @@ interface IPagination {
 // Tipo para os dados internos (com produtos e paginação)
 
 // Tipo para a resposta completa da API
+interface IProductVariantResponse {
+  data: IProductVariantOnly[];
+  pagination: IPagination;
+  error: string;
+};
 interface IProductResponse {
   data: IProduct[];
   pagination: IPagination;
@@ -72,5 +99,6 @@ export type {
   IPagination,
   IProductResponse,
   IProductVariantBySlugResponse,
-  IProductVariantBySlugCategoryResponse
+  IProductVariantBySlugCategoryResponse,
+  IProductVariantResponse
 }
