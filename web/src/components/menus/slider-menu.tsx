@@ -89,7 +89,7 @@ function SliderMenu() {
                         Home
                       </Link>
                     </div>
-                    <div className="hover:text-primary flex items-center">
+                    {/* <div className="hover:text-primary flex items-center">
                       <ShoppingBag
                         size={"1.2rem"}
                         className="text-primary mr-2"
@@ -106,7 +106,7 @@ function SliderMenu() {
                       >
                         Categories
                       </Link>
-                    </div>
+                    </div> */}
                     <div className="flex items-center">
                       <SearchIcon
                         size={"1.2rem"}
