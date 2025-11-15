@@ -13,20 +13,20 @@ const ProductItem = ({
   product,
   textContainerClassName,
 }: IProductItemProps) => {
-  const firstVariant = product.variants[0];
+  const firstVariant = product?.variants[0];
 
   return (
     <Link
-      href={`/products/${product.slug}/variants/${firstVariant.slug}`}
+      href={`/products/${product?.slug}/variants/${firstVariant?.slug}`}
       className="flex flex-col gap-4"
     >
       <div className="relative aspect-square w-[200px] shrink-0">
         <Image
           src={
-            firstVariant.imageUrl ??
+            firstVariant?.imageUrl ??
             "https://pub-3487eb3e73174ed99e160777dbdb7a0f.r2.dev/cupcake_halloween.png"
           }
-          alt={firstVariant.name}
+          alt={firstVariant?.name}
           fill
           className="rounded-3xl object-cover"
           // width={0}
@@ -41,12 +41,12 @@ const ProductItem = ({
           textContainerClassName,
         )}
       >
-        <p className="truncate text-sm font-medium">{product.name}</p>
+        <p className="truncate text-sm font-medium">{product?.name}</p>
         <p className="text-muted-foreground truncate text-xs font-medium">
-          {product.description}
+          {product?.description}
         </p>
         <p className="truncate text-sm font-semibold">
-          {formatCentsToBRL(firstVariant.priceInCents)}
+          {formatCentsToBRL(firstVariant?.priceInCents)}
         </p>
       </div>
     </Link>
