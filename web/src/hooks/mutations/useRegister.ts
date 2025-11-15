@@ -1,23 +1,19 @@
 import { TSignUpSchema } from '@/src/schemas/sign-up-schema';
 import { createUser } from '@/src/services/user.service';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from "next/navigation";
 import { useSession } from '../useSession';
 import { ILogin } from '@/src/interface/ILogin';
-import { useLogin } from './useLogin';
 
 export const userRegisterMutationKey = () => ["user-register"] as const;
 
 export function useRegister() {
-  const router = useRouter();
-  const loginMutation = useLogin();
 
   return useMutation({
     mutationKey: userRegisterMutationKey(),
     mutationFn: async (userData: TSignUpSchema) => {
       return createUser(userData);
     },
-    onSuccess: async (data: ILogin, variables) => {
+    onSuccess: async (data: ILogin) => {
       const userSession = useSession('user');
 
       userSession.remove();
@@ -27,15 +23,10 @@ export function useRegister() {
         email: data.data.email,
       });
 
-      await new Promise(resolve => setTimeout(resolve, 100));
 
-      // Forçar re-validação do middleware
-      router.refresh();
-
-      await loginMutation.mutateAsync({
-        email: variables.email,
-        password: variables.password
-      });
+      setTimeout(() => {
+        window.location.href = '/'; // ← NOVA LINHA (hard navigation)
+      }, 3000);
 
     },
     onError: (error) => {

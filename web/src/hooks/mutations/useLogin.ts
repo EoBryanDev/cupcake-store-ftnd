@@ -1,14 +1,12 @@
 import { TSignInSchema } from "@/src/schemas/sign-in-schema";
 import { login } from "@/src/services/user.service";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { useSession } from "../useSession";
 import { ILogin } from "@/src/interface/ILogin";
 
 export const postUserLoginMutationKey = () => ["user-login"] as const;
 
 export const useLogin = () => {
-  const router = useRouter();
   return useMutation({
     mutationKey: postUserLoginMutationKey(),
     mutationFn: async (loginPayload: TSignInSchema) => {
@@ -25,7 +23,7 @@ export const useLogin = () => {
       })
 
       setTimeout(() => {
-        router.push('/');
+        window.location.href = '/'; // ← NOVA LINHA (hard navigation)
       }, 3000);
     },
     onError: (error) => {
