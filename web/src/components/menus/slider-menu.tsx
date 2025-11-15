@@ -22,6 +22,7 @@ import { IUserInfo } from "@/src/interface/ILogin";
 import useBreakpoint from "@/src/hooks/useBreakPoint";
 import { Cart } from "../carts/cart";
 import { CartCheckout } from "../carts/cart-checkout";
+import { logout } from "@/src/helpers/logout";
 
 function SliderMenu() {
   const { isMobile } = useBreakpoint();
@@ -62,7 +63,11 @@ function SliderMenu() {
                       </span>
                     </div>
                   </div>
-                  <Button variant="outline" size="icon">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => logout()}
+                  >
                     <LogOutIcon />
                   </Button>
                 </div>
