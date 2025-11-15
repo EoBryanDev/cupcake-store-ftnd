@@ -9,6 +9,7 @@ import { useLogin } from './useLogin';
 export const userRegisterMutationKey = () => ["user-register"] as const;
 
 export function useRegister() {
+  const router = useRouter();
   const loginMutation = useLogin();
 
   return useMutation({
@@ -25,6 +26,12 @@ export function useRegister() {
         lastName: data.data.lastName,
         email: data.data.email,
       });
+
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      // Forçar re-validação do middleware
+      router.refresh();
+
       await loginMutation.mutateAsync({
         email: variables.email,
         password: variables.password
