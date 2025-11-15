@@ -1,23 +1,26 @@
-import { IProductData, IProductResponse } from "@/src/interface/IProductVariant";
+import { IFilters } from "@/src/components/menus/category-nav";
+import { IPaginationDefault } from "@/src/interface/IPaginationDefault";
+import { IProductResponse } from "@/src/interface/IProductVariant";
 import { getProductVariant } from "@/src/services/product-variant.service";
 import { useQuery } from "@tanstack/react-query";
 
-const getProductVariantQueryKey = (view: string | null) => [`product-variants-${view}`] as const;
+const getProductVariantQueryKey = (params: IPaginationDefault, filters?: IFilters) => [`product-variants`, params, filters] as const;
 
-const useProductVariantQuery = (view: string | null, p0: { initialData: IProductData | null; }) => {
-  return useQuery<IProductData | null, Error>({
-    queryKey: getProductVariantQueryKey(view),
+const useProductVariantQuery = (paginationParams: IPaginationDefault, filters?: IFilters) => {
+  return useQuery<IProductResponse | null, Error>({
+    queryKey: getProductVariantQueryKey(paginationParams, filters),
     queryFn: async () => {
-      const response: IProductResponse = await getProductVariant(view);
+      const response: IProductResponse = await getProductVariant(paginationParams, filters);
 
       if (response) {
-        return response.data;
+        return response;
       }
 
       return null
 
-    }
-  });
+    },
+
+  },);
 };
 
 export { getProductVariantQueryKey, useProductVariantQuery }

@@ -1,4 +1,4 @@
-import { formatCentsToBRL } from "@/src/helpers/money";
+import { formatCentsToBRL } from "@/src/helpers/format-cents-brlformated";
 import { IProduct } from "@/src/interface/IProductVariant";
 import { cn } from "@/src/lib/utils";
 import Image from "next/image";
@@ -17,20 +17,24 @@ const ProductItem = ({
 
   return (
     <Link
-      href={`/product-variant/${firstVariant.slug}`}
+      href={`/products/${product.slug}/variants/${firstVariant.slug}`}
       className="flex flex-col gap-4"
     >
-      <Image
-        src={
-          firstVariant.imageUrl ??
-          "https://pub-3487eb3e73174ed99e160777dbdb7a0f.r2.dev/cupcake_halloween.png"
-        }
-        alt={firstVariant.name}
-        width={0}
-        height={0}
-        sizes="100vw"
-        className="h-auto min-h-[300px] w-auto min-w-[300px] rounded-3xl object-cover"
-      />
+      <div className="relative aspect-square w-[200px] shrink-0">
+        <Image
+          src={
+            firstVariant.imageUrl ??
+            "https://pub-3487eb3e73174ed99e160777dbdb7a0f.r2.dev/cupcake_halloween.png"
+          }
+          alt={firstVariant.name}
+          fill
+          className="rounded-3xl object-cover"
+          // width={0}
+          // height={0}
+          // sizes="100vw"
+          // className="min-h-[300px] w-auto min-w-[300px] rounded-3xl"
+        />
+      </div>
       <div
         className={cn(
           "flex max-w-[200px] flex-col gap-1",

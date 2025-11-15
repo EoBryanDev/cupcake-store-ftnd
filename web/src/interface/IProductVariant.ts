@@ -1,7 +1,31 @@
+import { ICategory } from "./ICategory";
+
 // Tipo para a variante do produto
 interface IProductVariant {
   productVariantId: string;
   productId: string;
+  productName?: string;
+  name: string;
+  slug: string;
+  description: string;
+  color: string | null;
+  weight: string | null;
+  width: string | null;
+  height: string | null;
+  size: string | null;
+  priceInCents: number;
+  rawMaterial: string | null;
+  imageUrl: string | null;
+  active: boolean;
+  createdAt: string;
+  createdBy: string;
+};
+interface IProductVariantOnly {
+  productVariantId: string;
+  productId: string;
+  product: {
+    name: string;
+  }
   name: string;
   slug: string;
   description: string;
@@ -19,14 +43,6 @@ interface IProductVariant {
 };
 
 // Tipo para a categoria
-interface ICategory {
-  categoryId: string;
-  name: string;
-  description: string;
-  slug: string;
-  createdAt: string;
-  createdBy: string | null;
-};
 
 // Tipo para o produto
 interface IProduct {
@@ -52,23 +68,37 @@ interface IPagination {
 };
 
 // Tipo para os dados internos (com produtos e paginação)
-interface IProductData {
-  data: IProduct[];
-  pagination: IPagination;
-};
 
 // Tipo para a resposta completa da API
+interface IProductVariantResponse {
+  data: IProductVariantOnly[];
+  pagination: IPagination;
+  error: string;
+};
 interface IProductResponse {
-  data: IProductData;
+  data: IProduct[];
+  pagination: IPagination;
+  error: string;
+};
+
+interface IProductVariantBySlugResponse {
+  data: IProduct;
+  total: null;
+  error: string;
+};
+
+interface IProductVariantBySlugCategoryResponse {
+  data: IProduct[];
   total: null;
   error: string;
 };
 
 export type {
   IProductVariant,
-  ICategory,
   IProduct,
   IPagination,
-  IProductData,
-  IProductResponse
+  IProductResponse,
+  IProductVariantBySlugResponse,
+  IProductVariantBySlugCategoryResponse,
+  IProductVariantResponse
 }

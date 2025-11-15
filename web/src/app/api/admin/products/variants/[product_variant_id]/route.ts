@@ -1,0 +1,48 @@
+
+import { getAuthAdminTokenServer } from "@/src/helpers/auth-admin-server";
+import { IProductVariantResponse } from "@/src/interface/IProductVariant";
+
+import { NextRequest, NextResponse } from "next/server";
+
+const API_BACKEND_URL = process.env.NEXT_ENVIROMENT === 'DEV' ?
+  process.env.NEXT_PUBLIC_WS_DEV : process.env.NEXT_PUBLIC_WS_PROD;
+
+
+
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ product_variant_id: string }> }) {
+  try {
+    const { product_variant_id } = await params;
+    const token = await getAuthAdminTokenServer()
+
+
+    if (!token) {
+
+      return NextResponse.json(
+        { message: 'Auth token was not found!' },
+        { status: 401 }
+      );
+    }
+
+    const url = `${API_BACKEND_URL}/admin/products/variants/${product_variant_id}`;
+
+    const productVariantPayload = await request.json();
+
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ ...productVariantPayload })
+    });
+
+    const data: IProductVariantResponse = await response.json();
+    return NextResponse.json(data, { status: response.status });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: 'Failed to update product ' },
+      { status: 500 }
+    );
+  }
+
+}
