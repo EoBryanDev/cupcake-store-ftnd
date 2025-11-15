@@ -65,7 +65,6 @@ const CreateProductDialog = () => {
   const onSubmit = async (values: TNewProductSchema) => {
     try {
       const resp = await createProductMutation.mutateAsync(values);
-      console.log(resp);
 
       setOpen(false);
       newProductForm.reset();
