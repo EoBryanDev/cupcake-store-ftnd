@@ -53,10 +53,19 @@ export async function POST(request: NextRequest) {
         createdAt,
       }
     }, { status: 201 });
+    console.log('🍪 [REGISTRO] Setando cookie:', {
+      name: TOKEN_KEY,
+      domain: request.headers.get('host'),
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      expires_in,
+    });
+
 
     res.cookies.set(TOKEN_KEY, token, {
       httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax', // ← ADICIONE ISSO
       maxAge: expires_in,
       path: '/',
     });
