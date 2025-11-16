@@ -1,11 +1,9 @@
 import {
   HomeIcon,
-  ListIcon,
   LogInIcon,
   LogOutIcon,
-  MenuIcon,
   SearchIcon,
-  ShoppingBag,
+  ShoppingCartIcon,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import {
@@ -33,7 +31,7 @@ function SliderMenu() {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="default" size="icon" className="cursor-pointer">
-          <MenuIcon />
+          <ShoppingCartIcon />
         </Button>
       </SheetTrigger>
       <SheetContent side="right">
