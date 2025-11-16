@@ -1,22 +1,6 @@
-import { formatCentsToBRL } from "@/src/helpers/format-cents-brlformated";
+import { formatCentsToUSD } from "@/src/helpers/format-cents-usdformated";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import Image from "next/image";
-import useCartStore from "@/src/store/cart-store/useCartStore";
-// interface ICartSummaryOrderProps {
-//   orders: Array<{
-//     orderId: string;
-//     totalPriceInCents: number;
-//     status: string;
-//     createdAt: string;
-//     items: Array<{
-//       orderItemId: string;
-//       imageUrl: string;
-//       name: string;
-//       quantity: number;
-//       priceInCents: number;
-//     }>;
-//   }>;
-// }
 
 interface ICartSummaryOrderProps {
   totalPriceInCents: number;
@@ -42,7 +26,7 @@ const CartSummaryOrder = ({
         <div className="flex justify-between">
           <p className="text-sm">Subtotal</p>
           <p className="text-muted-foreground text-sm font-medium">
-            {formatCentsToBRL(totalPriceInCents ?? 0)}
+            {formatCentsToUSD(totalPriceInCents ?? 0)}
           </p>
         </div>
         <div className="flex justify-between">
@@ -52,7 +36,7 @@ const CartSummaryOrder = ({
         <div className="flex justify-between">
           <p className="text-sm">Total</p>
           <p className="text-muted-foreground text-sm font-medium">
-            {formatCentsToBRL(totalPriceInCents ?? 0)}
+            {formatCentsToUSD(totalPriceInCents ?? 0)}
           </p>
         </div>
 
@@ -83,7 +67,7 @@ const CartSummaryOrder = ({
                   {product.quantity}x
                 </p>
                 <p className="text-sm font-bold">
-                  {formatCentsToBRL(product.priceInCents)}
+                  {formatCentsToUSD(product.priceInCents)}
                 </p>
               </div>
             </div>

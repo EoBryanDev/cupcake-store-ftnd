@@ -1,25 +1,12 @@
 "use client";
 
-import { formatCentsToBRL } from "@/src/helpers/format-cents-brlformated";
 import { formatWithTimeZone } from "@/src/helpers/formatWithTimeZone";
-import { CheckIcon, XIcon, ChevronsUpDown, EditIcon } from "lucide-react";
-import { useAdminOrderListQuery } from "@/src/hooks/queries/(admin)/useAdminOrderListQuery";
 import { paginationDefault } from "@/src/helpers/pagination-default";
-import { Badge } from "../ui/badge";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
-import { Button } from "../ui/button";
 import { useSearchParams } from "next/navigation";
 import { IPaginationDefault } from "@/src/interface/IPaginationDefault";
 import { useEffect, useState } from "react";
 import { MainContainer } from "../containers/main-container";
 import { ProductGridPagination } from "../paginations/product-grid-pagination";
-import { toast } from "sonner";
-import { useAdminOrderApprovalMutation } from "@/src/hooks/mutations/(admin)/useAdminOrderApprovalMutation";
 import {
   Select,
   SelectContent,
@@ -27,9 +14,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { useAdminOrderStatusMutation } from "@/src/hooks/mutations/(admin)/useAdminOrderStatusMutation";
 import { useProductVariantQuery } from "@/src/hooks/queries/useProductVariants";
 import { UpdateProductDialog } from "../dialogs/update-product-dialog";
+import { formatDateToUserLocale } from "@/src/helpers/format-date-to-user-locate";
+import { formatTimeToUserLocale } from "@/src/helpers/format-time-to-user-locate";
+import { getTimeSeparator } from "@/src/helpers/get-time-separator-user-locate-based";
 
 const PRODUCT_STATUS = [
   { value: "ACTIVE", label: "Active", variant: "default" },
@@ -37,6 +26,7 @@ const PRODUCT_STATUS = [
 ] as const;
 
 const ProductTable = () => {
+  const timeSeparator = getTimeSeparator();
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const [pagination, setPagination] =
@@ -50,27 +40,6 @@ const ProductTable = () => {
     const offset = (currentPage - 1) * limit + 1;
     setPagination((prev) => ({ ...prev, currentPage, offset }));
   }, [page, pagination.limit]);
-
-  const createProductMutation = useAdminOrderApprovalMutation();
-  const updateProductsMutation = useAdminOrderStatusMutation();
-
-  const handleApprovalClick = async (orderId: string, approval: string) => {
-    try {
-      await createProductMutation.mutateAsync({ orderId, approval });
-      toast.success(`Order ${orderId} was ${approval} successfully`);
-    } catch (error) {
-      toast.error(`Order ${orderId} WAS NOT ${approval} successfully`);
-    }
-  };
-
-  // const handleStatusChange = async (orderId: string, newStatus: string) => {
-  //   try {
-  //     await orderStatusMutation.mutateAsync({ orderId, status: newStatus });
-  //     toast.success(`Order status updated to ${newStatus}`);
-  //   } catch (error) {
-  //     toast.error(`Failed to update order status`);
-  //   }
-  // };
 
   if (isProductLoading) {
     return <MainContainer>Loading...</MainContainer>;
@@ -148,33 +117,13 @@ const ProductTable = () => {
                 </td>
 
                 <td className="px-4 py-3 text-sm">
-                  {formatWithTimeZone(item.createdAt || "")}
+                  {formatDateToUserLocale(item.createdAt || "")} {timeSeparator}{" "}
+                  {formatTimeToUserLocale(item.createdAt || "")}
                 </td>
 
                 <td className="px-4 py-3">
                   <div className="flex gap-2">
                     <UpdateProductDialog productId={item.productId} />
-
-                    {/* <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="h-8 w-8 cursor-pointer bg-transparent p-0"
-                              // onClick={() =>
-                              //   handleApprovalClick(item.orderId!, "REJECTED")
-                              // }
-                              // disabled={orderApprovalMutation.isPending}
-                            >
-                              <XIcon className="h-4 w-4" />
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Reject</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider> */}
                   </div>
                 </td>
               </tr>

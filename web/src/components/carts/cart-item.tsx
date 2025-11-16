@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
-import { formatCentsToBRL } from "@/src/helpers/format-cents-brlformated";
+import { formatCentsToUSD } from "@/src/helpers/format-cents-usdformated";
 import {
   handleDecreaseQuantity,
   handleIncreaseQuantity,
@@ -73,7 +73,7 @@ const CartItem = ({
           </div>
 
           <p className="text-sm font-bold">
-            {formatCentsToBRL(productVariantPriceInCents * quantity)}
+            {formatCentsToUSD(productVariantPriceInCents * quantity)}
           </p>
         </div>
       </div>

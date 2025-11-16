@@ -3,7 +3,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { MainContainer } from "../containers/main-container";
-import { formatCentsToBRL } from "@/src/helpers/format-cents-brlformated";
+import { formatCentsToUSD } from "@/src/helpers/format-cents-usdformated";
 import { useProductVariantByIdQuery } from "@/src/hooks/queries/useProductVariantBySlug";
 import { Section } from "../sections/section";
 import { HighLightTitle } from "../sections/titles/highlight-title";
@@ -52,7 +52,7 @@ const ProductDetailPage = ({ slug, varSlug }: IProductDetailPageProps) => {
   }
 
   if (productLoading) {
-    return <MainContainer>Carregando...</MainContainer>;
+    return <MainContainer>Loading...</MainContainer>;
   }
 
   if (!product || !selectedVariant) {
@@ -125,12 +125,12 @@ const ProductDetailPage = ({ slug, varSlug }: IProductDetailPageProps) => {
           <main className="mb-8">
             <section className="flex items-center justify-between">
               <h2 className="text-3xl font-semibold">
-                {formatCentsToBRL(selectedVariant.priceInCents)}
+                {formatCentsToUSD(selectedVariant.priceInCents)}
               </h2>
               <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
             </section>
             <Subtitle>
-              {formatCentsToBRL(selectedVariant.priceInCents * quantity)}
+              {formatCentsToUSD(selectedVariant.priceInCents * quantity)}
             </Subtitle>
           </main>
 

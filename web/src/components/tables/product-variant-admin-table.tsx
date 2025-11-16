@@ -3,9 +3,6 @@
 import { ImageIcon } from "lucide-react";
 import { formatWithTimeZone } from "@/src/helpers/formatWithTimeZone";
 import { paginationDefault } from "@/src/helpers/pagination-default";
-import { Badge } from "../ui/badge";
-import { Tooltip, TooltipContent, TooltipProvider } from "../ui/tooltip";
-import { Button } from "../ui/button";
 import { useSearchParams } from "next/navigation";
 import { IPaginationDefault } from "@/src/interface/IPaginationDefault";
 import { useEffect, useState } from "react";
@@ -20,10 +17,12 @@ import {
 } from "../ui/select";
 import { useProductVariantOnlyQuery } from "@/src/hooks/queries/useProductVariantsOnly";
 import { UpdateProductVariantDialog } from "../dialogs/update-product-variant-dialog";
-import { formatCentsToBRL } from "@/src/helpers/format-cents-brlformated";
-import { useCreateProductVariantMutation } from "@/src/hooks/mutations/(admin)/useCreateProductVariantMutation";
+import { formatCentsToUSD } from "@/src/helpers/format-cents-usdformated";
 import { useUpdateProductVariantMutation } from "@/src/hooks/mutations/(admin)/useUpdateProductVariantMutation";
 import { toast } from "sonner";
+import { formatDateToUserLocale } from "@/src/helpers/format-date-to-user-locate";
+import { formatTimeToUserLocale } from "@/src/helpers/format-time-to-user-locate";
+import { getTimeSeparator } from "@/src/helpers/get-time-separator-user-locate-based";
 
 const PRODUCT_STATUS = [
   { value: "ACTIVE", label: "Active", variant: "default" },
@@ -31,6 +30,7 @@ const PRODUCT_STATUS = [
 ] as const;
 
 const ProductVariantTable = () => {
+  const timeSeparator = getTimeSeparator();
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const [pagination, setPagination] =
@@ -156,7 +156,7 @@ const ProductVariantTable = () => {
                 <td className="px-4 py-3 text-sm">{item.height}</td>
                 <td className="px-4 py-3 text-sm">{item.size}</td>
                 <td className="px-4 py-3 text-sm">
-                  {formatCentsToBRL(item.priceInCents)}
+                  {formatCentsToUSD(item.priceInCents)}
                 </td>
                 <td className="px-4 py-3 text-sm">{item.rawMaterial}</td>
 
@@ -185,7 +185,8 @@ const ProductVariantTable = () => {
                 </td>
 
                 <td className="px-4 py-3 text-sm">
-                  {formatWithTimeZone(item.createdAt || "")}
+                  {formatDateToUserLocale(item.createdAt || "")} {timeSeparator}{" "}
+                  {formatTimeToUserLocale(item.createdAt || "")}
                 </td>
 
                 <td className="px-4 py-3">

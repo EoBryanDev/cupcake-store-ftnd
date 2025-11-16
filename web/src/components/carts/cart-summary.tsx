@@ -1,4 +1,4 @@
-import { formatCentsToBRL } from "@/src/helpers/format-cents-brlformated";
+import { formatCentsToUSD } from "@/src/helpers/format-cents-usdformated";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import Image from "next/image";
 import useCartStore from "@/src/store/cart-store/useCartStore";
@@ -14,7 +14,7 @@ const CartSummary = () => {
         <div className="flex justify-between">
           <p className="text-sm">Subtotal</p>
           <p className="text-muted-foreground text-sm font-medium">
-            {formatCentsToBRL(cart?.total ?? 0)}
+            {formatCentsToUSD(cart?.total ?? 0)}
           </p>
         </div>
         <div className="flex justify-between">
@@ -24,7 +24,7 @@ const CartSummary = () => {
         <div className="flex justify-between">
           <p className="text-sm">Total</p>
           <p className="text-muted-foreground text-sm font-medium">
-            {formatCentsToBRL(cart?.total ?? 0)}
+            {formatCentsToUSD(cart?.total ?? 0)}
           </p>
         </div>
 
@@ -55,7 +55,7 @@ const CartSummary = () => {
                   {product.quantity}x
                 </p>
                 <p className="text-sm font-bold">
-                  {formatCentsToBRL(product.priceInCents)}
+                  {formatCentsToUSD(product.priceInCents)}
                 </p>
               </div>
             </div>

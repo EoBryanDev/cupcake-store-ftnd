@@ -1,4 +1,4 @@
-import { formatCentsToBRL } from "@/src/helpers/format-cents-brlformated";
+import { formatCentsToUSD } from "@/src/helpers/format-cents-usdformated";
 import { IProduct } from "@/src/interface/IProductVariant";
 import { cn } from "@/src/lib/utils";
 import Image from "next/image";
@@ -46,7 +46,7 @@ const ProductItem = ({
           {product?.description}
         </p>
         <p className="truncate text-sm font-semibold">
-          {formatCentsToBRL(firstVariant?.priceInCents)}
+          {formatCentsToUSD(firstVariant?.priceInCents)}
         </p>
       </div>
     </Link>

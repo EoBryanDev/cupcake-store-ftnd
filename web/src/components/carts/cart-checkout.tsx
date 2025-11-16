@@ -1,4 +1,4 @@
-import { formatCentsToBRL } from "@/src/helpers/format-cents-brlformated";
+import { formatCentsToUSD } from "@/src/helpers/format-cents-usdformated";
 import useCartStore from "@/src/store/cart-store/useCartStore";
 import CheckoutButton from "../buttons/checkout-button";
 import { useCookie } from "@/src/helpers/get-cookie";
@@ -21,7 +21,7 @@ const CartCheckout = () => {
           </div>
           <div className="text-md flex items-center justify-between font-medium">
             <p>Subtotal</p>
-            <p>{formatCentsToBRL(cart?.total ?? 0)}</p>
+            <p>{formatCentsToUSD(cart?.total ?? 0)}</p>
           </div>
 
           <div className="text-md flex items-center justify-between font-medium">
@@ -35,7 +35,7 @@ const CartCheckout = () => {
 
           <div className="mb-4 flex items-center justify-between text-2xl font-medium">
             <p>Total</p>
-            <p>{formatCentsToBRL(cart?.total ?? 0)}</p>
+            <p>{formatCentsToUSD(cart?.total ?? 0)}</p>
           </div>
 
           <footer className="flexitems-center justify-center">
