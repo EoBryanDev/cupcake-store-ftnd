@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
-import { MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
+import { ImageIcon, MinusIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { formatCentsToUSD } from "@/src/helpers/format-cents-usdformated";
 import {
   handleDecreaseQuantity,
@@ -27,14 +27,21 @@ const CartItem = ({
   return (
     <div className="flex gap-3">
       <div className="bg-muted relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border">
-        <Image
-          src={productVariantImageUrl}
-          alt={productVariantName}
-          fill
-          sizes="80px"
-          className="object-cover"
-          priority={false}
-        />
+        {!productVariantImageUrl && (
+          <div className="bg-muted flex h-full w-full items-center justify-center rounded-lg">
+            <ImageIcon className="text-muted-foreground min-h-15 w-5 min-w-15 object-cover" />
+          </div>
+        )}
+        {productVariantImageUrl && (
+          <Image
+            src={productVariantImageUrl}
+            alt={productVariantName}
+            fill
+            sizes="80px"
+            className="object-cover"
+            priority={false}
+          />
+        )}
       </div>
       <div className="flex min-w-0 flex-1 flex-col justify-between">
         <div className="flex items-start justify-between gap-2">

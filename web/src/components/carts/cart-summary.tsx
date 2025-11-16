@@ -2,6 +2,7 @@ import { formatCentsToUSD } from "@/src/helpers/format-cents-usdformated";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import Image from "next/image";
 import useCartStore from "@/src/store/cart-store/useCartStore";
+import { ImageIcon } from "lucide-react";
 
 const CartSummary = () => {
   const { cart } = useCartStore();
@@ -36,14 +37,21 @@ const CartSummary = () => {
             <div key={product.productVariantId}>
               <div className="flex gap-3">
                 <div className="bg-muted relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border">
-                  <Image
-                    src={product.imageUrl}
-                    alt={product.name}
-                    fill
-                    sizes="64px"
-                    className="object-cover"
-                    priority={false}
-                  />
+                  {!product.imageUrl && (
+                    <div className="bg-muted flex h-full w-full items-center justify-center rounded-lg">
+                      <ImageIcon className="text-muted-foreground min-h-15 w-5 min-w-15 object-cover" />
+                    </div>
+                  )}
+                  {product.imageUrl && (
+                    <Image
+                      src={product.imageUrl}
+                      alt={product.name}
+                      fill
+                      sizes="64px"
+                      className="object-cover"
+                      priority={false}
+                    />
+                  )}
                 </div>
 
                 <div className="flex min-w-0 flex-1 flex-col justify-between">

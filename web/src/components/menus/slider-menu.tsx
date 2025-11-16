@@ -21,7 +21,6 @@ import useBreakpoint from "@/src/hooks/useBreakPoint";
 import { Cart } from "../carts/cart";
 import { CartCheckout } from "../carts/cart-checkout";
 import { logout } from "@/src/helpers/logout";
-import { UserButton } from "../buttons/user-button";
 
 function SliderMenu() {
   const { isMobile } = useBreakpoint();
@@ -84,7 +83,7 @@ function SliderMenu() {
                 className="flex-shrink-0 cursor-pointer"
               >
                 <Link href="/login">
-                  {userInfo ? <LogOutIcon /> : <UserButton />}
+                  {userInfo ? <LogOutIcon /> : <LogInIcon />}
                 </Link>
               </Button>
             </div>

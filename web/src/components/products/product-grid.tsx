@@ -1,22 +1,23 @@
-"use client";
 import { IProduct } from "@/src/interface/IProductVariant";
-import ProductItem from "./product-item";
+import { ProductCard } from "./product-card";
 
 interface IProductGridProps {
   products: IProduct[];
-  className?: string;
 }
 
-const ProductGrid = ({ products, className }: IProductGridProps) => {
+const ProductGrid = ({ products }: IProductGridProps) => {
+  if (!products || products.length === 0) {
+    return (
+      <div className="flex min-h-[300px] items-center justify-center">
+        <p className="text-muted-foreground text-center">No products found</p>
+      </div>
+    );
+  }
+
   return (
-    <div
-      className={`grid w-full gap-6 ${className ?? ""}`}
-      style={{
-        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-      }}
-    >
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {products.map((product) => (
-        <ProductItem key={product.productId} product={product} />
+        <ProductCard key={product.productId} product={product} />
       ))}
     </div>
   );
