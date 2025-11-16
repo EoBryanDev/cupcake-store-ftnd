@@ -23,7 +23,7 @@ export const useLogin = () => {
       })
 
       setTimeout(() => {
-        window.location.href = '/'; // ← NOVA LINHA (hard navigation)
+        window.location.href = '/';
       }, 3000);
     },
     onError: (error) => {
