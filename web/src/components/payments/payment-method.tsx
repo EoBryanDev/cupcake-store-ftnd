@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Button } from "../ui/button";
@@ -14,28 +14,40 @@ const PaymentMethod = () => {
 
   return (
     <Card>
-      <CardHeader>Payment Method</CardHeader>
-      <CardContent>
+      <CardHeader>
+        <CardTitle>Payment Method</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
         <RadioGroup
           value={selectedPaymentMethod || ""}
           onValueChange={(value) => {
             setSelectedPaymentMethod(value);
-            // setIsEditing(false);
           }}
-          className="flex"
+          className="space-y-3"
         >
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="BANK_SLIP" id="BANK_SLIP" />
-            <Label htmlFor="BANK_SLIP">Bank Slip</Label>
+            <Label htmlFor="BANK_SLIP" className="cursor-pointer">
+              Bank Slip
+            </Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="CREDIT_CARD" id="CREDIT_CARD" disabled />
-            <Label htmlFor="CREDIT_CARD">Credit Card</Label>
+            <Label
+              htmlFor="CREDIT_CARD"
+              className="text-muted-foreground cursor-pointer"
+            >
+              Credit Card
+            </Label>
           </div>
         </RadioGroup>
 
-        <div className="mt-4 flex w-full gap-2">
-          <Button onClick={prevStep} variant="outline" className="flex-1">
+        <div className="flex w-full flex-col gap-2 pt-2 sm:flex-row">
+          <Button
+            onClick={prevStep}
+            variant="outline"
+            className="flex-1 cursor-pointer"
+          >
             Back to Identification
           </Button>
           <Button
@@ -44,7 +56,7 @@ const PaymentMethod = () => {
               nextStep();
             }}
             disabled={!selectedPaymentMethod}
-            className="flex-1"
+            className="flex-1 cursor-pointer"
           >
             Next to Checkout
           </Button>

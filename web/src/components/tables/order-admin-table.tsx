@@ -1,8 +1,8 @@
 "use client";
 
-import { formatCentsToBRL } from "@/src/helpers/format-cents-brlformated";
+import { formatCentsToUSD } from "@/src/helpers/format-cents-usdformated";
 import { formatWithTimeZone } from "@/src/helpers/formatWithTimeZone";
-import { CheckIcon, XIcon, ChevronsUpDown } from "lucide-react";
+import { CheckIcon, XIcon } from "lucide-react";
 import { useAdminOrderListQuery } from "@/src/hooks/queries/(admin)/useAdminOrderListQuery";
 import { paginationDefault } from "@/src/helpers/pagination-default";
 import { Badge } from "../ui/badge";
@@ -28,6 +28,9 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useAdminOrderStatusMutation } from "@/src/hooks/mutations/(admin)/useAdminOrderStatusMutation";
+import { formatDateToUserLocale } from "@/src/helpers/format-date-to-user-locate";
+import { getTimeSeparator } from "@/src/helpers/get-time-separator-user-locate-based";
+import { formatTimeToUserLocale } from "@/src/helpers/format-time-to-user-locate";
 
 const ORDER_STATUSES = [
   { value: "PENDING", label: "Pending", variant: "secondary" },
@@ -55,6 +58,7 @@ const OrderTable = () => {
 
   const orderApprovalMutation = useAdminOrderApprovalMutation();
   const orderStatusMutation = useAdminOrderStatusMutation();
+  const timeSeparator = getTimeSeparator();
 
   const handleApprovalClick = async (orderId: string, approval: string) => {
     try {
@@ -84,6 +88,9 @@ const OrderTable = () => {
         <table className="w-full">
           <thead className="bg-muted">
             <tr>
+              <th className="text-muted-foreground px-4 py-3 text-left text-sm font-medium">
+                Receiver Name
+              </th>
               <th className="text-muted-foreground px-4 py-3 text-left text-sm font-medium">
                 Address
               </th>
@@ -117,9 +124,10 @@ const OrderTable = () => {
             )}
             {orderData?.data?.map((item) => (
               <tr key={item.orderId} className="hover:bg-muted/50">
+                <td className="px-4 py-3 text-sm">{item.receiverName}</td>
                 <td className="px-4 py-3 text-sm">{`${item.street} - ${item.number} - ${item.neighborhood} - ${item.city} - ${item.state} - ${item.country}`}</td>
                 <td className="px-4 py-3 text-sm">
-                  {formatCentsToBRL(item.totalPriceInCents)}
+                  {formatCentsToUSD(item.totalPriceInCents)}
                 </td>
                 <td className="px-4 py-3 text-sm">{item.paymentType}</td>
                 <td className="px-4 py-3 text-sm">
@@ -151,7 +159,8 @@ const OrderTable = () => {
                 </td>
 
                 <td className="px-4 py-3 text-sm">
-                  {formatWithTimeZone(item.createdAt || "")}
+                  {formatDateToUserLocale(item.createdAt || "")} {timeSeparator}{" "}
+                  {formatTimeToUserLocale(item.createdAt || "")}
                 </td>
 
                 {/* Coluna de Actions - apenas Approval */}

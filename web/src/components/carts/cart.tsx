@@ -10,28 +10,24 @@ export const Cart = () => {
   const existCartItems = cart ? (cart.items.length > 0 ? true : false) : false;
 
   return (
-    <div className="flex h-full flex-col px-5 pb-5">
-      <div className="flex h-full max-h-full flex-col overflow-hidden">
-        <ScrollArea className="h-full">
-          <div className="flex h-full flex-col gap-8">
-            {!existCartItems && (
-              <div className="flex flex-col items-center justify-center">
-                <p>Cart is empty</p>
-                <p className="text-primary text-sm">Explore our products</p>
-                <div className="mt-4 flex items-center">
-                  <SearchIcon size={"1.2rem"} className="text-primary mr-2" />
-                  <Link
-                    href="/search?page=1"
-                    className="hover:text-primary cursor-pointer text-sm"
-                  >
-                    Search New Products
-                  </Link>
-                </div>
-              </div>
-            )}
-            {cart?.items.map((item) => (
+    <div className="flex flex-col">
+      {!existCartItems ? (
+        <div className="flex flex-col items-center justify-center py-8">
+          <p className="mb-1 text-sm font-medium">Cart is empty</p>
+          <p className="text-primary mb-4 text-xs">Explore our products</p>
+          <Link
+            href="/search?page=1"
+            className="hover:text-primary flex items-center gap-2 text-sm transition-colors"
+          >
+            <SearchIcon size={16} className="text-primary" />
+            <span>Search New Products</span>
+          </Link>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {cart?.items.map((item, index) => (
+            <div key={item.productVariantId}>
               <CartItem
-                key={item.productVariantId}
                 id={item.productVariantId}
                 productVariantId={item.productVariantId}
                 productVariantName={item.name}
@@ -39,10 +35,11 @@ export const Cart = () => {
                 productVariantPriceInCents={item.priceInCents}
                 quantity={item.quantity}
               />
-            ))}
-          </div>
-        </ScrollArea>
-      </div>
+              {index < cart.items.length - 1 && <hr className="mt-4" />}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

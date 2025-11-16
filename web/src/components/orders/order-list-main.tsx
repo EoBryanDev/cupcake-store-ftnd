@@ -9,12 +9,17 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import { Badge } from "../ui/badge";
+import { getTimeSeparator } from "@/src/helpers/get-time-separator-user-locate-based";
+import { formatDateToUserLocale } from "@/src/helpers/format-date-to-user-locate";
+import { formatTimeToUserLocale } from "@/src/helpers/format-time-to-user-locate";
 
 interface IOrderListProps {
   orders: IOrder[];
 }
 
 const OrderList = ({ orders }: IOrderListProps) => {
+  const timeSeparator = getTimeSeparator();
+
   return (
     <>
       <div className="space-y-5">
@@ -25,34 +30,34 @@ const OrderList = ({ orders }: IOrderListProps) => {
                 <AccordionItem value="item-1">
                   <AccordionTrigger>
                     <div className="flex flex-col gap-1">
-                      {order.status === "PAID" && <Badge>Pago</Badge>}
+                      {order.status === "PAID" && <Badge>Paid</Badge>}
                       {order.status === "PENDING" && (
-                        <Badge variant="outline">Pagamento Pendente</Badge>
+                        <Badge variant="outline">Payment Pending</Badge>
                       )}
                       {order.status === "CANCELED" && (
-                        <Badge variant="destructive">Pago</Badge>
+                        <Badge variant="destructive">Cancelled</Badge>
+                      )}
+                      {order.status === "FAILED" && (
+                        <Badge variant="destructive">Failled</Badge>
+                      )}
+                      {order.status === "SHIPPED" && (
+                        <Badge className="bg-sky-500">Shipped</Badge>
+                      )}
+                      {order.status === "DELIVERED" && (
+                        <Badge className="bg-green-500">Delivered</Badge>
                       )}
                       <div className="flex items-center justify-between">
                         <p>
-                          Pedido feito em{" "}
-                          {new Date(order.createdAt || "").toLocaleDateString(
-                            "pt-BR",
-                          )}{" "}
-                          às{" "}
-                          {new Date(order.createdAt || "").toLocaleTimeString(
-                            "pt-BR",
-                            {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            },
-                          )}
+                          Order made at{" "}
+                          {formatDateToUserLocale(order.createdAt || "")}{" "}
+                          {timeSeparator}{" "}
+                          {formatTimeToUserLocale(order.createdAt || "")}
                         </p>
                       </div>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
                     <CartSummaryOrder
-                      // subtotalInCents={order.totalPriceInCents}
                       totalPriceInCents={order.totalPriceInCents}
                       products={order.items.map((item) => ({
                         orderItemId: item.orderItemId || "",

@@ -38,7 +38,7 @@ const TableInverted: React.FC<IProps> = ({ productInfo }: IProps) => {
           <td>{productInfo.height ?? ""}</td>
         </tr>
         <tr className="border-t border-b py-5 text-left">
-          <th className="py-2">Peso</th>
+          <th className="py-2">Weight</th>
           <td>{productInfo.weight ?? ""}</td>
         </tr>
         <tr className="border-t border-b py-5 text-left">
