@@ -31,6 +31,10 @@ const CheckoutConfirmation = () => {
       const selectedAddress = addresses?.data?.find(
         (address) => address.shippingAddrId === userInfo?.address_id,
       );
+      const totalInCents =
+        cart?.items.reduce((acc, item) => {
+          return acc + item.priceInCents * item.quantity;
+        }, 0) ?? 0;
       const payload: IOrder = {
         receiverName: selectedAddress?.receiverName || "",
         street: selectedAddress?.street || "",
@@ -46,7 +50,7 @@ const CheckoutConfirmation = () => {
         shippingCompany: "TESTE",
         shippingTax: 0,
         discount: 0,
-        totalPriceInCents: 0,
+        totalPriceInCents: totalInCents,
         status: "PENDING",
         paymentType: "BANK_SLIP",
         items: cart?.items || [],
@@ -119,13 +123,14 @@ const CheckoutConfirmation = () => {
         </CardContent>
       </Card>
       <hr className="my-4" />
+
       <Card>
         <CardHeader>Payment Method</CardHeader>
         <CardContent className="p-4">
           <RadioGroup value={payment?.paymentMethod || ""} className="flex">
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="bank_slip" id="bank_slip" disabled />
-              <Label htmlFor="bank_slip">Bank Slip</Label>
+              <RadioGroupItem value="BANK_SLIP" id="BANK_SLIP" disabled />
+              <Label htmlFor="BANK_SLIP">Bank Slip</Label>
             </div>
           </RadioGroup>
         </CardContent>

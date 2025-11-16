@@ -5,62 +5,68 @@ import useCartStore from "@/src/store/cart-store/useCartStore";
 
 const CartSummary = () => {
   const { cart } = useCartStore();
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Summary</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3">
-        <div className="flex justify-between">
-          <p className="text-sm">Subtotal</p>
-          <p className="text-muted-foreground text-sm font-medium">
-            {formatCentsToUSD(cart?.total ?? 0)}
-          </p>
-        </div>
-        <div className="flex justify-between">
-          <p className="text-sm">Shipping</p>
-          <p className="text-muted-foreground text-sm font-medium">Free</p>
-        </div>
-        <div className="flex justify-between">
-          <p className="text-sm">Total</p>
-          <p className="text-muted-foreground text-sm font-medium">
-            {formatCentsToUSD(cart?.total ?? 0)}
-          </p>
-        </div>
-
-        <div className="py-3">
-          <hr />
-        </div>
-
-        {cart?.items.map((product) => (
-          <div className="flex items-center justify-between" key={product.name}>
-            <div className="flex items-center gap-4">
-              <Image
-                src={product.imageUrl}
-                alt={product.name}
-                width={78}
-                height={78}
-                className="rounded-lg"
-              />
-              <div className="flex flex-col gap-1">
-                <p className="text-sm font-semibold">{product.name}</p>
-                {/* <p className="text-muted-foreground text-xs font-medium">
-                  {product.variantName}
-                </p> */}
-              </div>
-            </div>
-            <div>
-              <div className="flex flex-col items-end justify-center gap-2">
-                <p className="text-muted-foreground text-xs">
-                  {product.quantity}x
-                </p>
-                <p className="text-sm font-bold">
-                  {formatCentsToUSD(product.priceInCents)}
-                </p>
-              </div>
-            </div>
+      <CardContent className="space-y-4">
+        <div className="space-y-2">
+          <div className="flex justify-between text-sm">
+            <p>Subtotal</p>
+            <p className="font-medium">{formatCentsToUSD(cart?.total ?? 0)}</p>
           </div>
-        ))}
+          <div className="flex justify-between text-sm">
+            <p>Shipping</p>
+            <p className="font-medium">Free</p>
+          </div>
+          <hr className="my-2" />
+          <div className="flex justify-between text-base font-semibold">
+            <p>Total</p>
+            <p>{formatCentsToUSD(cart?.total ?? 0)}</p>
+          </div>
+        </div>
+
+        <hr />
+
+        <div className="space-y-4">
+          <h4 className="text-sm font-semibold">Products</h4>
+          {cart?.items.map((product, index) => (
+            <div key={product.productVariantId}>
+              <div className="flex gap-3">
+                <div className="bg-muted relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border">
+                  <Image
+                    src={product.imageUrl}
+                    alt={product.name}
+                    fill
+                    sizes="64px"
+                    className="object-cover"
+                    priority={false}
+                  />
+                </div>
+
+                <div className="flex min-w-0 flex-1 flex-col justify-between">
+                  <p className="line-clamp-2 text-sm leading-tight font-semibold">
+                    {product.name}
+                  </p>
+
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-muted-foreground text-xs">
+                      Qty: {product.quantity}
+                    </span>
+                    <p className="text-sm font-bold">
+                      {formatCentsToUSD(
+                        product.priceInCents * product.quantity,
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              {index < cart.items.length - 1 && <hr className="mt-4" />}
+            </div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   );
