@@ -15,6 +15,7 @@ interface ICartItemProps {
   productVariantPriceInCents: number;
   quantity: number;
 }
+
 const CartItem = ({
   id,
   productVariantId,
@@ -24,48 +25,57 @@ const CartItem = ({
   quantity,
 }: ICartItemProps) => {
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-4">
+    <div className="flex gap-3">
+      <div className="bg-muted relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border">
         <Image
           src={productVariantImageUrl}
           alt={productVariantName}
-          width={78}
-          height={78}
-          className="rounded-lg"
+          fill
+          sizes="80px"
+          className="object-cover"
+          priority={false}
         />
-        <div className="flex flex-col gap-1">
-          <p className="text-sm font-semibold">{productVariantName}</p>
+      </div>
+      <div className="flex min-w-0 flex-1 flex-col justify-between">
+        <div className="flex items-start justify-between gap-2">
+          <p className="line-clamp-2 flex-1 text-sm leading-tight font-semibold">
+            {productVariantName}
+          </p>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="hover:text-destructive h-7 w-7 flex-shrink-0"
+            onClick={() => handleRemoveFromCart(productVariantId)}
+          >
+            <TrashIcon size={16} />
+          </Button>
+        </div>
 
-          <div className="flex w-[100px] items-center justify-between rounded-lg border p-1">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex w-[90px] items-center justify-between rounded-lg border p-1">
             <Button
-              className="h-4 w-4"
+              className="h-6 w-6 p-0"
               variant="ghost"
+              size="icon"
               onClick={() => handleDecreaseQuantity(productVariantId)}
             >
-              <MinusIcon />
+              <MinusIcon size={14} />
             </Button>
             <p className="text-xs font-medium">{quantity}</p>
             <Button
-              className="h-4 w-4"
+              className="h-6 w-6 p-0"
               variant="ghost"
+              size="icon"
               onClick={() => handleIncreaseQuantity(productVariantId)}
             >
-              <PlusIcon />
+              <PlusIcon size={14} />
             </Button>
           </div>
+
+          <p className="text-sm font-bold">
+            {formatCentsToBRL(productVariantPriceInCents * quantity)}
+          </p>
         </div>
-      </div>
-      <div className="flex flex-col items-end justify-center gap-2">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => handleRemoveFromCart(productVariantId)}
-        >
-          <TrashIcon />
-        </Button>
-        <p className="text-sm font-bold">
-          {formatCentsToBRL(productVariantPriceInCents)}
-        </p>
       </div>
     </div>
   );

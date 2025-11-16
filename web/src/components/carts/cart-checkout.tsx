@@ -13,7 +13,7 @@ const CartCheckout = () => {
   return (
     <>
       {existCartItems && (
-        <div className="flex h-full flex-col px-5 py-2 pb-5">
+        <div className="flex h-full flex-col px-2 py-1 pb-2">
           <div className="text-primary text-md my-2 flex items-center justify-between font-medium">
             <p>
               {total} {total > 1 ? "items" : "item"}{" "}
