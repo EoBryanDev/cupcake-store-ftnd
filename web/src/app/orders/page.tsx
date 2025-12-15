@@ -5,9 +5,9 @@ import { Suspense } from "react";
 
 const OrdersPage = async () => {
   return (
-    <main className="flex h-screen flex-col justify-between">
+    <main className="flex min-h-screen flex-col">
       <NavMenu />
-      <section>
+      <section className="flex-1">
         <Suspense
           fallback={
             <div className="flex items-center justify-center p-8">

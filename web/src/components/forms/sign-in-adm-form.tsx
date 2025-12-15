@@ -22,9 +22,12 @@ import { Button } from "../ui/button";
 import { signInSchema, TSignInSchema } from "@/src/schemas/sign-in-schema";
 import { toast } from "sonner";
 import { useLoginAdmin } from "@/src/hooks/mutations/(admin)/useLoginAdmin";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 const SignInAdminForm = () => {
-  // const router = useRouter();
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const userLogin = useLoginAdmin();
   const sign_in_form = useForm<any>({
     resolver: zodResolver(signInSchema),
@@ -36,10 +39,15 @@ const SignInAdminForm = () => {
 
   const onSubmit = async (values: TSignInSchema) => {
     try {
-      await userLogin.mutateAsync(values);
+      await userLogin.mutateAsync(values, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["session"] });
+          router.push("/admin/dashboard");
+        },
+      });
       toast.success("Login done successfully! Wait to be redirected!");
 
-      sign_in_form.reset;
+      sign_in_form.reset();
     } catch (error) {
       toast.error("There was not possible login!");
     }

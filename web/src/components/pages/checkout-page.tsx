@@ -32,17 +32,17 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <main className="flex flex-col">
+    <main className="flex min-h-[calc(100vh-200px)] flex-col">
       <header className="mx-auto mb-8 w-full max-w-3xl">
         <nav>
-          {/* <Stepper steps={steps} currentStep={currentStep} /> */}
           <Stepper steps={steps} currentStep={step ?? 1} />
         </nav>
       </header>
-      <section className="flex flex-col gap-8 md:flex-row md:justify-between">
+      <section className="flex flex-1 flex-col gap-8 md:flex-row md:justify-between">
         {step === 0 && (
           <main className="w-full rounded-lg p-4 md:w-2/3">
             <Addresses />

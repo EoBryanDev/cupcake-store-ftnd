@@ -1,11 +1,9 @@
 import {
   HomeIcon,
-  ListIcon,
   LogInIcon,
   LogOutIcon,
-  MenuIcon,
   SearchIcon,
-  ShoppingBag,
+  ShoppingCartIcon,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import {
@@ -22,6 +20,7 @@ import { IUserInfo } from "@/src/interface/ILogin";
 import useBreakpoint from "@/src/hooks/useBreakPoint";
 import { Cart } from "../carts/cart";
 import { CartCheckout } from "../carts/cart-checkout";
+import { logout } from "@/src/helpers/logout";
 
 function SliderMenu() {
   const { isMobile } = useBreakpoint();
@@ -32,110 +31,97 @@ function SliderMenu() {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="default" size="icon" className="cursor-pointer">
-          <MenuIcon />
+          <ShoppingCartIcon />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right">
-        <SheetHeader>
-          <SheetTitle>Menu</SheetTitle>
+      <SheetContent
+        side="right"
+        className="flex max-w-md flex-col p-0 sm:max-w-lg"
+      >
+        <SheetHeader className="flex-shrink-0 border-b px-4 py-4">
+          <SheetTitle className="text-left">Menu</SheetTitle>
         </SheetHeader>
-        <div className="flex h-full flex-col">
-          <div className="flex-shrink-0 px-5">
-            <hr className="mr-auto mb-2 ml-auto w-50" />
-            {userInfo ? (
-              <>
-                <div className="flex justify-between space-y-6">
-                  <div className="flex items-center gap-3">
-                    <Avatar>
-                      <AvatarFallback>
-                        {userInfo.firstName[0].toUpperCase()}
-                        {userInfo.lastName[0].toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
 
-                    <div>
-                      <h3 className="font-semibold">
-                        {userInfo.firstName} {userInfo.lastName}
-                      </h3>
-                      <span className="text-muted-foreground block text-xs">
-                        {userInfo.email}
-                      </span>
-                    </div>
-                  </div>
-                  <Button variant="outline" size="icon">
-                    <LogOutIcon />
-                  </Button>
+        <div className="flex-shrink-0 border-b px-4 py-4">
+          {userInfo ? (
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex min-w-0 flex-1 items-center gap-3">
+                <Avatar className="flex-shrink-0">
+                  <AvatarFallback>
+                    {userInfo?.firstName[0]?.toUpperCase()}
+                    {userInfo?.lastName[0]?.toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+
+                <div className="min-w-0 flex-1">
+                  <h3 className="truncate font-semibold">
+                    {userInfo?.firstName} {userInfo?.lastName}
+                  </h3>
+                  <span className="text-muted-foreground block truncate text-xs">
+                    {userInfo?.email}
+                  </span>
                 </div>
-              </>
-            ) : (
-              <div className="my-2 flex items-center justify-between">
-                <h2 className="font-semibold">Hello! Sign in your account !</h2>
-                <Button size="icon" asChild variant="default">
-                  <Link href="/login">
-                    <LogInIcon />
-                  </Link>
-                </Button>
               </div>
-            )}
+              <Button
+                variant="outline"
+                size="icon"
+                className="flex-shrink-0"
+                onClick={() => logout()}
+              >
+                <LogOutIcon />
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="text-sm font-semibold">
+                Hello! Sign in your account!
+              </h2>
+              <Button
+                size="icon"
+                asChild
+                variant="default"
+                className="flex-shrink-0 cursor-pointer"
+              >
+                <Link href="/login">
+                  {userInfo ? <LogOutIcon /> : <LogInIcon />}
+                </Link>
+              </Button>
+            </div>
+          )}
+        </div>
 
-            {isMobile && (
-              <>
-                <hr className="mt-2 mr-auto ml-auto w-50" />
-                <aside className="px-5">
-                  <nav className="flex flex-col items-start space-y-2">
-                    <div className="hover:text-primary flex items-center">
-                      <HomeIcon size={"1.2rem"} className="text-primary mr-2" />
-                      <Link href="/" className="cursor-pointer text-sm">
-                        Home
-                      </Link>
-                    </div>
-                    <div className="hover:text-primary flex items-center">
-                      <ShoppingBag
-                        size={"1.2rem"}
-                        className="text-primary mr-2"
-                      />
-                      <Link href="/" className="cursor-pointer text-sm">
-                        Products
-                      </Link>
-                    </div>
-                    <div className="flex items-center">
-                      <ListIcon size={"1.2rem"} className="text-primary mr-2" />
-                      <Link
-                        href="/"
-                        className="hover:text-primary cursor-pointer text-sm"
-                      >
-                        Categories
-                      </Link>
-                    </div>
-                    <div className="flex items-center">
-                      <SearchIcon
-                        size={"1.2rem"}
-                        className="text-primary mr-2"
-                      />
-                      <Link
-                        href="/search?page=1"
-                        className="hover:text-primary cursor-pointer text-sm"
-                      >
-                        Search
-                      </Link>
-                    </div>
-                  </nav>
-                </aside>
-              </>
-            )}
+        {isMobile && (
+          <nav className="flex-shrink-0 border-b px-4 py-3">
+            <div className="flex flex-col space-y-3">
+              <Link
+                href="/"
+                className="hover:text-primary flex items-center gap-2 text-sm"
+              >
+                <HomeIcon size={18} className="text-primary flex-shrink-0" />
+                <span>Home</span>
+              </Link>
+              <Link
+                href="/search?page=1"
+                className="hover:text-primary flex items-center gap-2 text-sm"
+              >
+                <SearchIcon size={18} className="text-primary flex-shrink-0" />
+                <span>Search</span>
+              </Link>
+            </div>
+          </nav>
+        )}
+
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+          <div className="flex-shrink-0 px-4 py-3">
+            <h3 className="text-lg font-semibold">Shopping Cart</h3>
           </div>
-
-          <div className="flex-grow overflow-y-auto">
-            <SheetHeader>
-              <SheetTitle>Shopping Cart</SheetTitle>
-            </SheetHeader>
+          <div className="flex-1 overflow-y-auto px-4">
             <Cart />
           </div>
+        </div>
 
-          <div className="flex-shrink-0">
-            <hr className="mr-auto ml-auto w-50" />
-            <CartCheckout />
-          </div>
+        <div className="bg-background flex-shrink-0 border-t px-4">
+          <CartCheckout />
         </div>
       </SheetContent>
     </Sheet>

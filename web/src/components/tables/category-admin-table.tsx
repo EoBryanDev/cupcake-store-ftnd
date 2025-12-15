@@ -8,8 +8,12 @@ import { MainContainer } from "../containers/main-container";
 import { ProductGridPagination } from "../paginations/product-grid-pagination";
 import { UpdateCategoryDialog } from "../dialogs/update-category-dialog";
 import { useCategoryQuery } from "@/src/hooks/queries/(admin)/useCategoryQuery";
+import { formatDateToUserLocale } from "@/src/helpers/format-date-to-user-locate";
+import { formatTimeToUserLocale } from "@/src/helpers/format-time-to-user-locate";
+import { getTimeSeparator } from "@/src/helpers/get-time-separator-user-locate-based";
 
 const CategoryTable = () => {
+  const timeSeparator = getTimeSeparator();
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const [pagination, setPagination] =
@@ -66,7 +70,8 @@ const CategoryTable = () => {
                 <td className="px-4 py-3 text-sm">{item.description}</td>
 
                 <td className="px-4 py-3 text-sm">
-                  {formatWithTimeZone(item.createdAt || "")}
+                  {formatDateToUserLocale(item.createdAt || "")} {timeSeparator}{" "}
+                  {formatTimeToUserLocale(item.createdAt || "")}
                 </td>
 
                 <td className="px-4 py-3">

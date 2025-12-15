@@ -24,6 +24,19 @@ const ADMIN_REDIRECT_WHEN_AUTHENTICATED = '/admin/dashboard';
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
+  if (path === '/checkout') {
+    console.log('🔍 CHECKOUT ACCESS ATTEMPT:', {
+      cookies: request.cookies.getAll(),
+      headers: {
+        host: request.headers.get('host'),
+        origin: request.headers.get('origin'),
+        referer: request.headers.get('referer'),
+      },
+      env: process.env.NODE_ENV,
+      tokenKey: TOKEN_KEY,
+    });
+  }
+
   const isAdminRoute = path.startsWith('/admin');
 
   const tokenKey = isAdminRoute ? TOKEN_KEY_ADMIN : TOKEN_KEY;

@@ -47,33 +47,48 @@ const ProductListPage = () => {
 
   return (
     <MainContainer>
-      <main className="flex">
+      <main className="flex min-h-[calc(100vh-200px)] flex-col md:flex-row">
         <aside className="hidden md:block md:w-1/3">
           <header className="mr-auto mb-8">
             <HighLightTitle>Filters</HighLightTitle>
           </header>
           <CategoryNavigation filters={filters} setFilters={setFilters} />
         </aside>
-        <section className="flex w-full flex-col items-center justify-between md:block md:w-2/3">
+        <section className="flex w-full flex-col md:w-2/3">
           <header className="mb-8 md:mr-auto">
             <HighLightTitle>Products</HighLightTitle>
             <Subtitle>
-              Explore our products and be plesured with our yummies
+              Explore our products and be pleased with our yummies
             </Subtitle>
           </header>
-          {varProductsLoading && <div>Loading...</div>}
-          {varProductsError && <div>Error loading products</div>}
-          <div className="mt-8">
-            {varProducts && <ProductGrid products={varProducts.data} />}
-          </div>
-          <footer className="mt-12">
-            {varProducts && varProducts.pagination && (
-              <ProductGridPagination
-                totalPages={varProducts.pagination.totalPages}
-                currentPage={pagination.currentPage}
-              />
-            )}
-          </footer>
+
+          {varProductsLoading && (
+            <div className="flex flex-1 items-center justify-center py-12">
+              <p className="text-muted-foreground">Loading...</p>
+            </div>
+          )}
+
+          {varProductsError && (
+            <div className="flex flex-1 items-center justify-center py-12">
+              <p className="text-destructive">Error loading products</p>
+            </div>
+          )}
+
+          {varProducts && (
+            <>
+              <div className="flex-1">
+                <ProductGrid products={varProducts.data} />
+              </div>
+              <footer className="mt-12">
+                {varProducts.pagination && (
+                  <ProductGridPagination
+                    totalPages={varProducts.pagination.totalPages}
+                    currentPage={pagination.currentPage}
+                  />
+                )}
+              </footer>
+            </>
+          )}
         </section>
       </main>
     </MainContainer>

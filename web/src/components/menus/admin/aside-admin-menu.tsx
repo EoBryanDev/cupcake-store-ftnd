@@ -85,7 +85,7 @@ const AsideAdminMenu = () => {
 
         <Link
           className="mt-1 mb-2 flex cursor-pointer items-center justify-center gap-0 transition-all duration-700 ease-in-out group-hover:justify-start group-hover:gap-3"
-          href={"/admin/stock"}
+          href={"/admin/stocks"}
         >
           <WarehouseIcon size="1.4rem" className="shrink-0 text-white" />
           <span className="max-w-0 overflow-hidden text-sm font-medium whitespace-nowrap opacity-0 transition-all duration-700 ease-in-out group-hover:max-w-xs group-hover:opacity-100">

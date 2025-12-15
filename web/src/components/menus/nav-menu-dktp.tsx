@@ -7,7 +7,6 @@ import { SliderMenu } from "./slider-menu";
 import { OrderButton } from "../buttons/order-button";
 import { UserButton } from "../buttons/user-button";
 import { useCookie } from "@/src/helpers/get-cookie";
-// import { SearchInput } from "../inputs/search-input";
 
 export function NavMenuDesktop() {
   const cookie = useCookie("ck-store-key");
@@ -30,7 +29,7 @@ export function NavMenuDesktop() {
                 Home
               </Link>
             </div>
-            <div className="hover:text-primary flex items-center">
+            {/* <div className="hover:text-primary flex items-center">
               <Link href="/" className="cursor-pointer text-sm">
                 Products
               </Link>
@@ -42,7 +41,7 @@ export function NavMenuDesktop() {
               >
                 Categories
               </Link>
-            </div>
+            </div> */}
             <div className="flex items-center">
               <Link
                 href="/search?page=1"

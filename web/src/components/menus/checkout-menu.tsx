@@ -3,11 +3,7 @@
 import { ThemeToggle } from "@/src/components/buttons/theme-toggle";
 
 import Link from "next/link";
-import { SliderMenu } from "./slider-menu";
 import { OrderButton } from "../buttons/order-button";
-import { UserButton } from "../buttons/user-button";
-import { useCookie } from "@/src/helpers/get-cookie";
-// import { SearchInput } from "../inputs/search-input";
 
 export function CheckoutMenu() {
   return (

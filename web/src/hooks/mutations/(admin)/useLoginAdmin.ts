@@ -1,6 +1,5 @@
 import { TSignInSchema } from "@/src/schemas/sign-in-schema";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { useSession } from "../../useSession";
 import { ILogin } from "@/src/interface/ILogin";
 import { loginAdmin } from "@/src/services/(admin)/userAdmin.service";
@@ -8,7 +7,6 @@ import { loginAdmin } from "@/src/services/(admin)/userAdmin.service";
 export const postUserLoginAdminMutationKey = () => ["user-login-admin"] as const;
 
 export const useLoginAdmin = () => {
-  const router = useRouter();
   return useMutation({
     mutationKey: postUserLoginAdminMutationKey(),
     mutationFn: async (loginPayload: TSignInSchema) => {
@@ -25,7 +23,7 @@ export const useLoginAdmin = () => {
       })
 
       setTimeout(() => {
-        router.push('/admin/dashboard');
+        window.location.href = '/admin/dashboard';
       }, 3000);
     },
     onError: (error) => {

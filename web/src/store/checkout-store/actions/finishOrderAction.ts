@@ -1,9 +1,7 @@
 import useCartStore from "../../cart-store/useCartStore"
 
 const finishOrderAction = () => {
-  const { deleteCart } = useCartStore()
-
-  deleteCart()
+  useCartStore.getState().deleteCart()
 }
 
 export { finishOrderAction }

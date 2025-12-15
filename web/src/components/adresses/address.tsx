@@ -272,7 +272,7 @@ const Addresses = () => {
                 addUserAdd(selectedAddress);
                 nextStep();
               }}
-              className="w-full"
+              className="w-full cursor-pointer"
             >
               Payment Method
             </Button>
@@ -459,7 +459,7 @@ const Addresses = () => {
 
               <Button
                 type="submit"
-                className="w-full"
+                className="w-full cursor-pointer"
                 disabled={
                   createAddressMutation.isPending ||
                   updateAddressMutation.isPending
@@ -651,7 +651,7 @@ const Addresses = () => {
 
               <Button
                 type="submit"
-                className="w-full"
+                className="w-full cursor-pointer"
                 disabled={updateAddressMutation.isPending}
               >
                 {updateAddressMutation.isPending

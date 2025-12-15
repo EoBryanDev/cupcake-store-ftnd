@@ -9,6 +9,7 @@ import { Button } from "../../ui/button";
 import { LogOutIcon } from "lucide-react";
 import { useCookie } from "@/src/helpers/get-cookie";
 import { useEffect } from "react";
+import { logoutAdmin } from "@/src/helpers/logout-admin";
 
 export function LoginAdminMenu() {
   const cookie = useCookie("ck-store-key-admin");
@@ -34,7 +35,7 @@ export function LoginAdminMenu() {
           <div className="flex items-center gap-1">
             <ThemeToggle />
             {cookie && (
-              <Button variant="ghost" className="cursor-pointer">
+              <Button variant="ghost" className="cursor-pointer" onClick={()=> logoutAdmin()}>
                 <LogOutIcon size={"1.2rem"} />
               </Button>
             )}

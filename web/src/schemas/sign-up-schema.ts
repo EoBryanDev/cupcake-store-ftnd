@@ -7,8 +7,8 @@ const signUpSchema = z
     legalId: z.string("Invalid Legal Id"),
     birthDate: z.date("Invalid Date"),
     email: z.email("Invalid E-mail"),
-    password: z.string("Invalid Password"),
-    passwordConfirmation: z.string("Invalid Password"),
+    password: z.string("Invalid Password").min(8, "Min 8 characteres"),
+    passwordConfirmation: z.string("Invalid Password").min(8, "Min 8 characteres"),
   })
   .refine(
     (data) => {

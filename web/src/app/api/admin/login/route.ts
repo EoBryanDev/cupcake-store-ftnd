@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
     res.cookies.set(TOKEN_KEY_ADMIN, access_token, {
       httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
       maxAge: expires_in,
       path: '/',
     });
