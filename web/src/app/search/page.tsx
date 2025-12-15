@@ -1,6 +1,7 @@
 import { MainFooter } from "@/src/components/footers/main-footer";
 import { NavMenu } from "@/src/components/menus/nav-menu";
 import { ProductListPage } from "@/src/components/pages/product-list-page";
+import { LoadingProducts } from "@/src/components/loading-products";
 import { Suspense } from "react";
 
 const SearchPage = async () => {
@@ -10,9 +11,7 @@ const SearchPage = async () => {
       <div className="flex-1">
         <Suspense
           fallback={
-            <div className="flex items-center justify-center p-8">
-              Loading products...
-            </div>
+            <LoadingProducts />
           }
         >
           <ProductListPage />
