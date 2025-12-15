@@ -11,7 +11,10 @@ import { paginationDefault } from "@/src/helpers/pagination-default";
 import { useSearchParams } from "next/navigation";
 import { IPaginationDefault } from "@/src/interface/IPaginationDefault";
 
+import { useTranslation } from "react-i18next";
+
 const ProductListPage = () => {
+  const { t } = useTranslation(["products", "common"]);
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
 
@@ -50,27 +53,27 @@ const ProductListPage = () => {
       <main className="flex min-h-[calc(100vh-200px)] flex-col md:flex-row">
         <aside className="hidden md:block md:w-1/3">
           <header className="mr-auto mb-8">
-            <HighLightTitle>Filters</HighLightTitle>
+            <HighLightTitle>{t("list.filters")}</HighLightTitle>
           </header>
           <CategoryNavigation filters={filters} setFilters={setFilters} />
         </aside>
         <section className="flex w-full flex-col md:w-2/3">
           <header className="mb-8 md:mr-auto">
-            <HighLightTitle>Products</HighLightTitle>
+            <HighLightTitle>{t("list.title")}</HighLightTitle>
             <Subtitle>
-              Explore our products and be pleased with our yummies
+              {t("list.subtitle")}
             </Subtitle>
           </header>
 
           {varProductsLoading && (
             <div className="flex flex-1 items-center justify-center py-12">
-              <p className="text-muted-foreground">Loading...</p>
+              <p className="text-muted-foreground">{t("list.loading")}</p>
             </div>
           )}
 
           {varProductsError && (
             <div className="flex flex-1 items-center justify-center py-12">
-              <p className="text-destructive">Error loading products</p>
+              <p className="text-destructive">{t("common:status.error")}</p>
             </div>
           )}
 

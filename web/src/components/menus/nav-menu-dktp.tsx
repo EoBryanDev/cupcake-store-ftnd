@@ -1,6 +1,8 @@
 "use client";
 
 import { ThemeToggle } from "@/src/components/buttons/theme-toggle";
+import { LanguageSwitcher } from "../language-switcher";
+import { useTranslation } from "react-i18next";
 
 import Link from "next/link";
 import { SliderMenu } from "./slider-menu";
@@ -9,6 +11,7 @@ import { UserButton } from "../buttons/user-button";
 import { useCookie } from "@/src/helpers/get-cookie";
 
 export function NavMenuDesktop() {
+  const { t } = useTranslation();
   const cookie = useCookie("ck-store-key");
 
   return (
@@ -26,7 +29,7 @@ export function NavMenuDesktop() {
           <nav className="hidden items-center space-x-6 sm:flex">
             <div className="hover:text-primary flex items-center">
               <Link href="/" className="cursor-pointer text-sm">
-                Home
+                {t("navigation.home")}
               </Link>
             </div>
             {/* <div className="hover:text-primary flex items-center">
@@ -47,7 +50,7 @@ export function NavMenuDesktop() {
                 href="/search?page=1"
                 className="hover:text-primary cursor-pointer text-sm"
               >
-                Search
+                {t("navigation.search")}
               </Link>
             </div>
           </nav>
@@ -62,6 +65,7 @@ export function NavMenuDesktop() {
             </Link>
           )}
           {cookie && <OrderButton />}
+          <LanguageSwitcher />
           <ThemeToggle />
           <SliderMenu />
         </div>

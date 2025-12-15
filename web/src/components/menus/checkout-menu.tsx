@@ -1,6 +1,7 @@
 "use client";
 
 import { ThemeToggle } from "@/src/components/buttons/theme-toggle";
+import { LanguageSwitcher } from "../language-switcher";
 
 import Link from "next/link";
 import { OrderButton } from "../buttons/order-button";
@@ -21,6 +22,7 @@ export function CheckoutMenu() {
           {/* <SearchInput /> */}
 
           <OrderButton />
+          <LanguageSwitcher />
           <ThemeToggle />
         </div>
       </div>

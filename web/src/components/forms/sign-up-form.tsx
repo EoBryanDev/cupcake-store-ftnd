@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 import {
   Card,
@@ -34,6 +35,7 @@ import { CalendarIcon } from "lucide-react";
 import { cpfMask, phoneMask } from "@/src/helpers/masks";
 
 const SignUpForm = () => {
+  const { t } = useTranslation("auth");
   const router = useRouter();
   const queryClient = useQueryClient();
   const register = useRegister();
@@ -58,19 +60,19 @@ const SignUpForm = () => {
           queryClient.invalidateQueries({ queryKey: ["session"] });
         },
       });
-      toast.success("Registered successfully! Wait to be redirected!");
+      toast.success(t("signUp.success"));
 
       sign_up_form.reset();
     } catch (error: any) {
-      toast.error(error.message || "There was not possible register!");
+      toast.error(error.message || t("signUp.error"));
     }
   };
   return (
     <>
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Create an Account</CardTitle>
-          <CardDescription>Create an account to continue</CardDescription>
+          <CardTitle>{t("signUp.title")}</CardTitle>
+          <CardDescription>{t("signUp.description")}</CardDescription>
         </CardHeader>
         <Form {...sign_up_form}>
           <form
@@ -83,9 +85,9 @@ const SignUpForm = () => {
                 name="firstName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>First Name</FormLabel>
+                    <FormLabel>{t("signUp.firstName")}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Type your first name" {...field} />
+                      <Input placeholder={t("signUp.firstNamePlaceholder")} {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -97,9 +99,9 @@ const SignUpForm = () => {
                 name="lastName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel>{t("signUp.lastName")}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Type your last name" {...field} />
+                      <Input placeholder={t("signUp.lastNamePlaceholder")} {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -111,7 +113,7 @@ const SignUpForm = () => {
                 name="phoneNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone Number</FormLabel>
+                    <FormLabel>{t("signUp.phone")}</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="(xx) xxxxx-xxxx"
@@ -131,7 +133,7 @@ const SignUpForm = () => {
                 name="legalId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Legal ID</FormLabel>
+                    <FormLabel>{t("signUp.legalId")}</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="xxx.xxx.xxx-xx"
@@ -151,7 +153,7 @@ const SignUpForm = () => {
                 name="birthDate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Birth Date</FormLabel>
+                    <FormLabel>{t("signUp.birthDate")}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -165,7 +167,7 @@ const SignUpForm = () => {
                             {field.value ? (
                               format(field.value, "PPP")
                             ) : (
-                              <span>Pick a date</span>
+                              <span>{t("signUp.pickDate")}</span>
                             )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -193,9 +195,9 @@ const SignUpForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>E-mail</FormLabel>
+                    <FormLabel>{t("signIn.emailLabel")}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Type your e-mail" {...field} />
+                      <Input placeholder={t("signIn.emailPlaceholder")} {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -207,10 +209,10 @@ const SignUpForm = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("signIn.passwordLabel")}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Type your password"
+                        placeholder={t("signIn.passwordPlaceholder")}
                         {...field}
                         type="password"
                       />
@@ -225,10 +227,10 @@ const SignUpForm = () => {
                 name="passwordConfirmation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Confirm your Password</FormLabel>
+                    <FormLabel>{t("signUp.confirmPassword")}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Type your password again"
+                        placeholder={t("signUp.confirmPasswordPlaceholder")}
                         {...field}
                         type="password"
                       />
@@ -241,7 +243,7 @@ const SignUpForm = () => {
             </CardContent>
             <CardFooter>
               <Button type="submit" className="w-full">
-                Sign Up
+                {t("signUp.submit")}
               </Button>
             </CardFooter>
           </form>

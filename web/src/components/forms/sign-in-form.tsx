@@ -24,7 +24,10 @@ import { signInSchema, TSignInSchema } from "@/src/schemas/sign-in-schema";
 import { toast } from "sonner";
 import { useLogin } from "@/src/hooks/mutations/useLogin";
 
+import { useTranslation } from "react-i18next";
+
 const SignInForm = () => {
+  const { t } = useTranslation("auth");
   // const router = useRouter();
   const userLogin = useLogin();
   const sign_in_form = useForm<any>({
@@ -38,11 +41,11 @@ const SignInForm = () => {
   const onSubmit = async (values: TSignInSchema) => {
     try {
       await userLogin.mutateAsync(values);
-      toast.success("Login done successfully! Wait to be redirected!");
+      toast.success(t("signIn.success"));
 
       sign_in_form.reset;
     } catch (error) {
-      toast.error("There was not possible login!");
+      toast.error(t("signIn.error"));
     }
   };
 
@@ -50,8 +53,8 @@ const SignInForm = () => {
     <>
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Sign In</CardTitle>
-          <CardDescription>Login to continue</CardDescription>
+          <CardTitle>{t("signIn.title")}</CardTitle>
+          <CardDescription>{t("signIn.description")}</CardDescription>
         </CardHeader>
         <Form {...sign_in_form}>
           <form
@@ -64,9 +67,9 @@ const SignInForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>E-mail</FormLabel>
+                    <FormLabel>{t("signIn.emailLabel")}</FormLabel>
                     <FormControl>
-                      <Input placeholder="Type your e-mail" {...field} />
+                      <Input placeholder={t("signIn.emailPlaceholder")} {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -78,10 +81,10 @@ const SignInForm = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>{t("signIn.passwordLabel")}</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Type your password"
+                        placeholder={t("signIn.passwordPlaceholder")}
                         {...field}
                         type="password"
                       />
@@ -94,7 +97,7 @@ const SignInForm = () => {
             </CardContent>
             <CardFooter className="flex flex-col gap-2">
               <Button type="submit" className="w-full">
-                Sign In
+                {t("signIn.submit")}
               </Button>
             </CardFooter>
           </form>

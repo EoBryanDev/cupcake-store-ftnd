@@ -7,8 +7,10 @@ import { Subtitle } from "../sections/titles/subtitle";
 import { PromoBanner } from "../banners/promo-banner";
 import { useProductVariantPopularQuery } from "@/src/hooks/queries/useProductVariantsPopular";
 import { useProductVariantNewestQuery } from "@/src/hooks/queries/useProductVariantsNewest";
+import { useTranslation } from "react-i18next";
 
 function HomePage() {
+  const { t } = useTranslation(["home", "common"]);
   const {
     data: newestProducts,
     isLoading: newestProductsLoading,
@@ -27,14 +29,10 @@ function HomePage() {
           <div className="mb-8 text-center">
             <HighLightTitle>
               <span className="from-primary bg-gradient-to-r to-gray-500 bg-clip-text text-transparent">
-                CupCake{" "}
+                {t("hero.title")}{" "}
               </span>
-              Store
             </HighLightTitle>
-            <Subtitle>
-              A new concept of cupcake store. Mixing modern, art and yummy
-              flavors.
-            </Subtitle>
+            <Subtitle>{t("hero.subtitle")}</Subtitle>
           </div>
           <div className="">
             <PromoBanner src="https://pub-3487eb3e73174ed99e160777dbdb7a0f.r2.dev/cupcake-store.png" />
@@ -44,10 +42,10 @@ function HomePage() {
         <hr />
 
         <Section>
-          <HighLightTitle>Newest Products</HighLightTitle>
-          <Subtitle>Our newest products that will impress your tasty</Subtitle>
-          {newestProductsLoading && <div>Loading...</div>}
-          {newestProductsError && <div>Error loading products</div>}
+          <HighLightTitle>{t("sections.newest.title")}</HighLightTitle>
+          <Subtitle>{t("sections.newest.subtitle")}</Subtitle>
+          {newestProductsLoading && <div>{t("common:status.loading")}</div>}
+          {newestProductsError && <div>{t("common:status.error")}</div>}
           <div className="mt-8">
             {newestProducts && <ProductList products={newestProducts.data} />}
           </div>
@@ -64,12 +62,10 @@ function HomePage() {
         <hr />
 
         <Section>
-          <HighLightTitle>Most Popular</HighLightTitle>
-          <Subtitle>
-            Our most popular products that impressour customers
-          </Subtitle>
-          {popularProductsLoading && <div>Loading...</div>}
-          {popularProductsError && <div>Error loading products</div>}
+          <HighLightTitle>{t("sections.popular.title")}</HighLightTitle>
+          <Subtitle>{t("sections.popular.subtitle")}</Subtitle>
+          {popularProductsLoading && <div>{t("common:status.loading")}</div>}
+          {popularProductsError && <div>{t("common:status.error")}</div>}
           <div className="mt-8 py-4">
             {popularProducts && <ProductList products={popularProducts.data} />}
           </div>

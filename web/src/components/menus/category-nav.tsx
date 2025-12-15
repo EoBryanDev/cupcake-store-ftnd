@@ -53,7 +53,7 @@ const CategoryNavigation = ({
       <div>
         <Subtitle>Color</Subtitle>
         <hr />
-        {filtersData?.data.colors.map((color) => (
+        {filtersData?.data?.colors.map((color) => (
           <div className="my-4 flex items-center gap-3" key={color}>
             <Checkbox
               id={color}
@@ -67,7 +67,7 @@ const CategoryNavigation = ({
       <div>
         <Subtitle>Size</Subtitle>
         <hr />
-        {filtersData?.data.sizes.map((size) => (
+        {filtersData?.data?.sizes.map((size) => (
           <div className="my-4 flex items-center gap-3" key={size}>
             <Checkbox
               id={size}
