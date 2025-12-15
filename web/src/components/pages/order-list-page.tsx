@@ -11,7 +11,11 @@ import { ProductGridPagination } from "../paginations/product-grid-pagination";
 import { useOrderListQuery } from "@/src/hooks/queries/useOrderListQuery";
 import { useSearchParams } from "next/navigation";
 
+import { useTranslation } from "react-i18next";
+import { LoadingState } from "../loading-state";
+
 const OrderListPage = () => {
+  const { t } = useTranslation(["orders", "common"]);
   const searchParams = useSearchParams();
   const [pagination, setPagination] =
     useState<IPaginationDefault>(paginationDefault());
@@ -26,17 +30,17 @@ const OrderListPage = () => {
   }, [page, pagination.limit]);
 
   if (isLoading) {
-    return <MainContainer>Loading...</MainContainer>;
+    return <MainContainer><LoadingState messageKey="list.loading" ns="orders" /></MainContainer>;
   }
 
   return (
     <MainContainer>
       <Section>
-        <HighLightTitle>My Orders</HighLightTitle>
-        <Subtitle>Check your orders history here</Subtitle>
+        <HighLightTitle>{t("list.title")}</HighLightTitle>
+        <Subtitle>{t("list.subtitle")}</Subtitle>
       </Section>
       <hr />
-      {isError && <div>Error loading products</div>}
+      {isError && <div>{t("list.error")}</div>}
       <div className="mt-8">
         {data && <OrderList orders={data.data ?? []} />}
       </div>

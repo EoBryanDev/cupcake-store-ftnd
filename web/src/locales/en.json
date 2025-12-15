@@ -1,0 +1,99 @@
+{
+	"common": {
+		"theme": {
+			"light": "Light",
+			"dark": "Dark",
+			"system": "System",
+			"toggle": "Toggle theme"
+		},
+		"language": {
+			"select": "Select language",
+			"en": "English",
+			"pt": "Portuguese"
+		},
+		"navigation": {
+			"home": "Home",
+			"search": "Search",
+			"signIn": "Sign In",
+			"orders": "Orders"
+		},
+		"footer": {
+			"copyright": "2025 Copyright CKSTORE",
+			"rights": "All rights reserved - Powered by Bryan"
+		},
+		"status": {
+			"loading": "Loading...",
+			"error": "Error loading data"
+		},
+		"buttons": {
+			"order": "Order button",
+			"account": "Account"
+		}
+	},
+	"home": {
+		"hero": {
+			"title": "CupCake Store",
+			"subtitle": "A new concept of cupcake store. Mixing modern, art and yummy flavors."
+		},
+		"sections": {
+			"newest": {
+				"title": "Newest Products",
+				"subtitle": "Our newest products that will impress your tasty"
+			},
+			"popular": {
+				"title": "Most Popular",
+				"subtitle": "Our most popular products that impress our customers"
+			}
+		}
+	},
+	"auth": {
+		"tabs": {
+			"signIn": "Sign In",
+			"signUp": "Sign Up"
+		},
+		"signIn": {
+			"title": "Sign In",
+			"description": "Login to continue",
+			"emailLabel": "E-mail",
+			"emailPlaceholder": "Type your e-mail",
+			"passwordLabel": "Password",
+			"passwordPlaceholder": "Type your password",
+			"submit": "Sign In",
+			"success": "Login done successfully! Wait to be redirected!",
+			"error": "There was not possible login!"
+		},
+		"signUp": {
+			"title": "Create an Account",
+			"description": "Create an account to continue",
+			"firstName": "First Name",
+			"firstNamePlaceholder": "Type your first name",
+			"lastName": "Last Name",
+			"lastNamePlaceholder": "Type your last name",
+			"phone": "Phone Number",
+			"legalId": "Legal ID",
+			"birthDate": "Birth Date",
+			"pickDate": "Pick a date",
+			"confirmPassword": "Confirm your Password",
+			"confirmPasswordPlaceholder": "Type your password again",
+			"submit": "Sign Up",
+			"success": "Registered successfully! Wait to be redirected!",
+			"error": "There was not possible register!"
+		}
+	},
+	"products": {
+		"list": {
+			"filters": "Filters",
+			"title": "Products",
+			"subtitle": "Explore our products and be pleased with our yummies",
+			"loading": "Loading products..."
+		}
+	},
+	"orders": {
+		"list": {
+			"title": "My Orders",
+			"subtitle": "Check your orders history here",
+			"loading": "Loading orders...",
+			"error": "Error loading orders"
+		}
+	}
+}

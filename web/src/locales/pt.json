@@ -1,0 +1,99 @@
+{
+  "common": {
+    "theme": {
+      "light": "Claro",
+      "dark": "Escuro",
+      "system": "Sistema",
+      "toggle": "Alternar tema"
+    },
+    "language": {
+      "select": "Selecione o idioma",
+      "en": "Inglês",
+      "pt": "Português"
+    },
+    "navigation": {
+      "home": "Início",
+      "search": "Buscar",
+      "signIn": "Entrar",
+      "orders": "Pedidos"
+    },
+    "footer": {
+      "copyright": "2025 Copyright CKSTORE",
+      "rights": "Todos os direitos reservados - Feito por Bryan"
+    },
+    "status": {
+      "loading": "Carregando...",
+      "error": "Erro ao carregar dados"
+    },
+    "buttons": {
+      "order": "Botão de pedido",
+      "account": "Conta"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "CupCake Store",
+      "subtitle": "Um novo conceito de loja de cupcakes. Misturando moderno, arte e sabores deliciosos."
+    },
+    "sections": {
+      "newest": {
+        "title": "Novidades",
+        "subtitle": "Nossos produtos mais recentes que impressionarão seu paladar"
+      },
+      "popular": {
+        "title": "Mais Populares",
+        "subtitle": "Nossos produtos mais populares que impressionam nossos clientes"
+      }
+    }
+  },
+  "auth": {
+    "tabs": {
+      "signIn": "Entrar",
+      "signUp": "Cadastrar"
+    },
+    "signIn": {
+      "title": "Entrar",
+      "description": "Faça login para continuar",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "Digite seu e-mail",
+      "passwordLabel": "Senha",
+      "passwordPlaceholder": "Digite sua senha",
+      "submit": "Entrar",
+      "success": "Login realizado com sucesso! Aguarde ser redirecionado!",
+      "error": "Não foi possível realizar o login!"
+    },
+    "signUp": {
+      "title": "Criar uma Conta",
+      "description": "Crie uma conta para continuar",
+      "firstName": "Nome",
+      "firstNamePlaceholder": "Digite seu nome",
+      "lastName": "Sobrenome",
+      "lastNamePlaceholder": "Digite seu sobrenome",
+      "phone": "Telefone",
+      "legalId": "CPF",
+      "birthDate": "Data de Nascimento",
+      "pickDate": "Selecione uma data",
+      "confirmPassword": "Confirme sua Senha",
+      "confirmPasswordPlaceholder": "Digite sua senha novamente",
+      "submit": "Cadastrar",
+      "success": "Cadastro realizado com sucesso! Aguarde ser redirecionado!",
+      "error": "Não foi possível realizar o cadastro!"
+    }
+  },
+  "products": {
+    "list": {
+      "filters": "Filtros",
+      "title": "Produtos",
+      "subtitle": "Explore nossos produtos e delicie-se com nossas gostosuras",
+      "loading": "Carregando produtos..."
+    }
+  },
+  "orders": {
+    "list": {
+      "title": "Meus Pedidos",
+      "subtitle": "Verifique o histórico de seus pedidos aqui",
+      "loading": "Carregando pedidos...",
+      "error": "Erro ao carregar pedidos"
+    }
+  }
+}
