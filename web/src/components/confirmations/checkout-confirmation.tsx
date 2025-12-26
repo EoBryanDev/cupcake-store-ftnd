@@ -136,12 +136,20 @@ const CheckoutConfirmation = () => {
         </CardContent>
       </Card>
 
-      <div className="mt-4 flex w-full gap-2">
-        <Button onClick={prevStep} variant="outline" className="flex-1">
+      <div className="mt-6 flex w-full flex-wrap gap-3 md:flex-nowrap">
+        <Button
+          onClick={prevStep}
+          variant="outline"
+          className="h-auto w-full px-4 py-2 text-center whitespace-normal md:flex-1"
+        >
           Back to Identification
         </Button>
-        <Button onClick={handleFinishOrder} className="flex-1">
-          Finish Order
+        <Button
+          onClick={handleFinishOrder}
+          className="h-auto w-full py-2 md:flex-1"
+          disabled={createOrderMutation.isPending}
+        >
+          {createOrderMutation.isPending ? "Processing..." : "Finish Order"}
         </Button>
       </div>
     </Card>
