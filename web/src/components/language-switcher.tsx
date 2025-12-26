@@ -18,24 +18,47 @@ export function LanguageSwitcher() {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return (
-      <div className="w-[140px] h-10" />
-    );
-  }
+  if (!mounted) return <div className="h-10 w-[70px]" />;
 
   const handleLanguageChange = (value: string) => {
     i18n.changeLanguage(value);
   };
 
+  const langCode = (i18n.language?.split("-")[0] || "pt") as "en" | "pt";
+  const translationKey = `language.${langCode}` as const;
+
   return (
-    <Select value={i18n.language} onValueChange={handleLanguageChange}>
-      <SelectTrigger className="w-[140px]">
-        <SelectValue placeholder={t("language.select")} />
+    <Select
+      value={i18n.language?.includes("pt") ? "pt-BR" : "en"}
+      onValueChange={handleLanguageChange}
+    >
+      <SelectTrigger className="w-auto min-w-[80px] gap-2 px-3">
+        <SelectValue>
+          <div className="flex items-center gap-2">
+            <span>{langCode === "en" ? "🇺🇸" : "🇧🇷"}</span>
+            <span className="text-xs font-bold uppercase md:hidden">
+              {langCode}
+            </span>
+            <span className="hidden text-sm md:inline">
+              {t(translationKey as any)}
+            </span>
+          </div>
+        </SelectValue>
       </SelectTrigger>
+
       <SelectContent>
-        <SelectItem value="en">🇺🇸 {t("language.en")}</SelectItem>
-        <SelectItem value="pt-BR">🇧🇷 {t("language.pt")}</SelectItem>
+        <SelectItem value="en">
+          <div className="flex items-center gap-2">
+            <span>🇺🇸</span>
+            <span>{t("language.en")}</span>
+          </div>
+        </SelectItem>
+        <SelectItem value="pt-BR">
+          <div className="flex items-center gap-2">
+            <span>🇧🇷</span>
+            <span>{t("language.pt")}</span>
+          </div>
+        </SelectItem>
       </SelectContent>
     </Select>
   );
